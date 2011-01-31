@@ -16,4 +16,7 @@
         <token>htmlBodyToken</token>
         <token>textBodyToken</token>
     </tokens>
+    <attachments>
+        <attachment>D:\workspace\git\EmailSystem\EmailRelay.App.Tests.Unit\attachment.jpg</attachment>
+    </attachments>
 </emailPackage>

@@ -6,7 +6,9 @@ namespace EmailProcessing
 {
     public class EmailWatcher : IEmailWatcher
     {
-        private ILog log = LogManager.GetLogger(typeof (EmailWatcher));
+        private readonly string _watchLocation;
+        private readonly IEmailPackageSerialiser _packageSerialiser;
+        private ILog log = LogManager.GetLogger(typeof(EmailWatcher));
 
         private FileSystemWatcher _fsWatcher;
         public event EventHandler<EmailToSendArgs> OnMailToSend;
@@ -63,8 +65,12 @@ namespace EmailProcessing
                 OnMailToSend(this, new EmailToSendArgs(){Message=message, PackagePath = path});
         }
 
-        private readonly string _watchLocation;
-        private readonly IEmailPackageSerialiser _packageSerialiser;
+
+        public EmailWatcher(IEmailPackageSerialiser packageSerialiser)
+        {
+            _packageSerialiser = packageSerialiser;
+            _watchLocation = EmailProcessingConfigurationManager.Section.PickupLocation;
+        }
 
         public EmailWatcher(string watchLocation, IEmailPackageSerialiser packageSerialiser)
         {

@@ -54,6 +54,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="attachment.jpg" />
     <Content Include="lib\nunit.framework.dll" />
     <Content Include="SampleEmailPackage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

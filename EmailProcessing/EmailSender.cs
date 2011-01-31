@@ -3,22 +3,40 @@ using System.IO;
 
 namespace EmailProcessing
 {
-    public class EmailSender : IEmailSender
+    public abstract class EmailSender : IEmailSender
     {
-        private readonly string _deliveredLocation;
-        private readonly string _failedLocation;
+        protected readonly string DeliveredLocation;
+        protected readonly string FailedLocation;
+
+        public EmailSender()
+        {
+            DeliveredLocation = EmailProcessingConfigurationManager.Section.DeliveredLocation;
+            FailedLocation = EmailProcessingConfigurationManager.Section.FailedLocation;
+        }
 
         public EmailSender(string deliveredLocation, string failedLocation)
         {
-            _deliveredLocation = deliveredLocation;
-            _failedLocation = failedLocation;
+            DeliveredLocation = deliveredLocation;
+            FailedLocation = failedLocation;
         }
 
-        public void SendMail(object sender, EmailToSendArgs e)
+        public virtual void SendMail(object sender, EmailToSendArgs e)
         {
             Console.WriteLine("send package " + e.Message.Subject);
-            string filename = Path.GetFileName(e.PackagePath);
-            File.Move(e.PackagePath, Path.Combine(_deliveredLocation, Guid.NewGuid() + ".xml"));
+            
+            // create a directory for the package
+            string deliveryPath = Path.Combine(DeliveredLocation, Guid.NewGuid().ToString());
+            Directory.CreateDirectory(deliveryPath);
+
+            // copy attachments to delivery folder
+            if (e.Message.Attachments != null)
+            {
+                foreach (string attachment in e.Message.Attachments)
+                    File.Copy(attachment, Path.Combine(deliveryPath, Path.GetFileName(attachment)));
+            }
+
+            // copy the email package to delivery folder
+            File.Move(e.PackagePath, Path.Combine(deliveryPath, Path.GetFileName(e.PackagePath)));
         }
     }
 }

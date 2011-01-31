@@ -36,6 +36,7 @@
       <HintPath>lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -47,12 +48,14 @@
   <ItemGroup>
     <Compile Include="EmailPackage.cs" />
     <Compile Include="EmailPackageSerialiser.cs" />
+    <Compile Include="EmailProcessingConfigurationSection.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailToSendArgs.cs" />
     <Compile Include="EmailWatcher.cs" />
     <Compile Include="IEmailPackageSerialiser.cs" />
     <Compile Include="IEmailSender.cs" />
     <Compile Include="IEmailWatcher.cs" />
+    <Compile Include="NoRelayEmailSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

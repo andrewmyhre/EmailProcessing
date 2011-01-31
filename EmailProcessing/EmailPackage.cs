@@ -18,6 +18,22 @@ namespace EmailProcessing
         public string Text { get; set; }
         [DataMember(Name="tokens")]
         public TokenList Tokens { get; set; }
+        [DataMember(Name = "attachments")]
+        public AttachmentList Attachments { get; set; }
+    }
+
+    [CollectionDataContract(Name="attachments",ItemName="attachment",Namespace="http://www.justgiving.com/xml/"  )]
+    public class AttachmentList : Collection<string>
+    {
+        public AttachmentList() : base()
+        {
+            
+        }
+        public AttachmentList(IEnumerable<string> attachments)
+        {
+            foreach(string a in attachments)
+                Add(a);
+        }
     }
 
     [CollectionDataContract(Name = "tokens", ItemName = "token", Namespace = "http://www.justgiving.com/xml/")]

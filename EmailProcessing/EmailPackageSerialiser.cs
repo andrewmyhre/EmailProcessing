@@ -25,7 +25,13 @@ namespace EmailProcessing
                     Html=xdoc.Element(XName.Get("emailPackage", jgNamespace)).Element(XName.Get("html", jgNamespace)).Value,
                     Text= xdoc.Element(XName.Get("emailPackage", jgNamespace)).Element(XName.Get("text", jgNamespace)).Value,
                     Tokens = new TokenList((from t in xdoc.Element(XName.Get("emailPackage", jgNamespace)).Element(XName.Get("tokens", jgNamespace)).Elements(XName.Get("token", jgNamespace))
-                              select t.Value))
+                              select t.Value)),
+                    Attachments = new AttachmentList(
+                        (from a in xdoc
+                                    .Element(XName.Get("emailPackage", jgNamespace))
+                                    .Element(XName.Get("attachments", jgNamespace))
+                                    .Elements(XName.Get("attachment", jgNamespace))
+                             select a.Value))
                                 
                 };
         }

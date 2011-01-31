@@ -17,30 +17,22 @@ namespace EmailRelay.App
             IEmailPackageSerialiser packageSerializer = null;
             IEmailWatcher watcher = null;
             IEmailSender sender = null;
+            EmailProcessingConfigurationSection configuration = EmailProcessingConfigurationManager.Section;
+
             try
             {
-                string pickupPath = ConfigurationManager.AppSettings["pickupLocation"] ??
-                                    Path.Combine(Environment.CurrentDirectory, "pickup");
-                string deliveredPath = ConfigurationManager.AppSettings["deliveredLocation"] ??
-                                       Path.Combine(Environment.CurrentDirectory, "delivered");
-                string failedPath = ConfigurationManager.AppSettings["failedLocation"] ??
-                                    Path.Combine(Environment.CurrentDirectory, "failed");
-
-                if (!Directory.Exists(pickupPath)) Directory.CreateDirectory(pickupPath);
-                if (!Directory.Exists(deliveredPath)) Directory.CreateDirectory(deliveredPath);
-                if (!Directory.Exists(failedPath)) Directory.CreateDirectory(failedPath);
-
-
+                if (!Directory.Exists(configuration.PickupLocation)) Directory.CreateDirectory(configuration.PickupLocation);
+                if (!Directory.Exists(configuration.DeliveredLocation)) Directory.CreateDirectory(configuration.DeliveredLocation);
+                if (!Directory.Exists(configuration.FailedLocation)) Directory.CreateDirectory(configuration.FailedLocation);
 
                 packageSerializer = new EmailPackageSerialiser();
-                watcher = new EmailWatcher(pickupPath, packageSerializer);
-                sender = new EmailSender(deliveredPath,
-                                         failedPath);
+                watcher = new EmailWatcher(packageSerializer);
+                sender = EmailSenderFactory.CreateSenderFromConfiguration();
 
                 watcher.OnMailToSend += sender.SendMail;
 
                 Console.Clear();
-                Console.WriteLine("Watching " + pickupPath + ". Press Esc to stop");
+                Console.WriteLine("Watching " + configuration.PickupLocation + ". Press Esc to stop");
                 watcher.StartWatching();
 
                 ConsoleKeyInfo key = new ConsoleKeyInfo();
@@ -52,6 +44,16 @@ namespace EmailRelay.App
                 if (watcher != null)
                     watcher.Dispose();
             }
+        }
+    }
+
+    internal static class EmailSenderFactory
+    {
+        public static IEmailSender CreateSenderFromConfiguration()
+        {
+            Type senderType = Type.GetType(EmailProcessingConfigurationManager.Section.EmailSenderType.Type);
+            IEmailSender sender = Activator.CreateInstance(senderType, null) as IEmailSender;
+            return sender;
         }
     }
 }
