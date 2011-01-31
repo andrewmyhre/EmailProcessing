@@ -23,17 +23,13 @@ namespace EmailRelay.App.Tests.Unit
             Assert.That(package.Subject, Is.EqualTo("test email subject: {subjectToken}"));
             Assert.That(package.Html.Trim(), Is.StringContaining(@"<p>html body</p>"));
             Assert.That(package.Text.Trim(), Is.StringContaining(@"text body"));
-            Assert.That(package.Tokens, Has.Count.EqualTo(3));
-            Assert.That(package.Tokens, Has.Some.InstanceOf(typeof(string)).And.EqualTo("subjectToken"));
-            Assert.That(package.Tokens, Has.Some.InstanceOf(typeof(string)).And.EqualTo("htmlBodyToken"));
-            Assert.That(package.Tokens, Has.Some.InstanceOf(typeof(string)).And.EqualTo("textBodyToken"));
         }
 
         [Test]
         public void EmailPackageSerialiser_Serialisation_CanSerialiseAnEmailPackage()
         {
             EmailPackageSerialiser serialiser = new EmailPackageSerialiser();
-            EmailPackage package = SamplePackage();
+            EmailPackage package = Helpers.SamplePackage();
             string serialised = serialiser.Serialise(package);
             string jgnamespace= "http://www.justgiving.com/xml/";
 
@@ -59,18 +55,6 @@ namespace EmailRelay.App.Tests.Unit
 
                 Assert.AreEqual(expected, actual);
             }
-        }
-
-        private EmailPackage SamplePackage()
-        {
-            return new EmailPackage()
-                {
-                    From = "test@test.com",
-                    Html = "test html {token1}",
-                    Text = "test text {token2}",
-                    Subject = "test subject {token3}",
-                    Tokens = new TokenList {"token1", "token2", "token3"}
-                };
         }
     }
 }

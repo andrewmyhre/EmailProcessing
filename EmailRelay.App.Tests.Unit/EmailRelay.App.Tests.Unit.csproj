@@ -45,7 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmailPackageSerialiserTests.cs" />
+    <Compile Include="EmailTemplateManagerTests.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateProcessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EmailProcessing\EmailProcessing.csproj">
@@ -55,6 +58,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="attachment.jpg" />
+    <Content Include="SampleEmailTemplate.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="lib\nunit.framework.dll" />
     <Content Include="SampleEmailPackage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

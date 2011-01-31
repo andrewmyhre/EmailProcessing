@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace EmailProcessing
 {
     [DataContract(Name = "emailPackage", Namespace = "http://www.justgiving.com/xml/")]
-    public class EmailPackage
+    public class EmailTemplate
     {
         [DataMember(Name="from")]
         public string From { get; set; }
@@ -16,23 +16,21 @@ namespace EmailProcessing
         public string Html { get; set; }
         [DataMember(Name = "text")]
         public string Text { get; set; }
-        [DataMember(Name = "attachments")]
-        public AttachmentList Attachments { get; set; }
+        [DataMember(Name="tokens")]
+        public TokenList Tokens { get; set; }
     }
 
-    [CollectionDataContract(Name="attachments",ItemName="attachment",Namespace="http://www.justgiving.com/xml/"  )]
-    public class AttachmentList : Collection<string>
+    [CollectionDataContract(Name = "tokens", ItemName = "token", Namespace = "http://www.justgiving.com/xml/")]
+    public class TokenList : Collection<string>
     {
-        public AttachmentList() : base()
+        public TokenList() : base()
         {
             
         }
-        public AttachmentList(IEnumerable<string> attachments)
+        public TokenList(IEnumerable<string> tokens)
         {
-            foreach(string a in attachments)
-                Add(a);
+            foreach(string t in tokens)
+                Add(t);
         }
     }
-
-
 }

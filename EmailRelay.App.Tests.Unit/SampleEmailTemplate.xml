@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<emailTemplate xmlns="emailnamespace">
+    <from>testfrom@server.com</from>
+    <subject>test email subject</subject>
+    <html><![CDATA[html body]]></html>
+    <text>text body</text>
+    <tokens>
+        <token>subjectToken</token>
+        <token>htmlBodyToken</token>
+        <token>textBodyToken</token>
+    </tokens>
+</emailTemplate>

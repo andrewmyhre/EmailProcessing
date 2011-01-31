@@ -25,6 +25,7 @@ namespace EmailRelay.App
                 if (!Directory.Exists(configuration.DeliveredLocation)) Directory.CreateDirectory(configuration.DeliveredLocation);
                 if (!Directory.Exists(configuration.FailedLocation)) Directory.CreateDirectory(configuration.FailedLocation);
 
+                
                 packageSerializer = new EmailPackageSerialiser();
                 watcher = new EmailWatcher(packageSerializer);
                 sender = EmailSenderFactory.CreateSenderFromConfiguration();
