@@ -8,6 +8,11 @@ namespace EmailProcessing
     [DataContract(Name = "emailPackage", Namespace = "http://www.justgiving.com/xml/")]
     public class EmailPackage
     {
+        public EmailPackage()
+        {
+            Attachments = new AttachmentList();
+        }
+
         [DataMember(Name="from")]
         public string From { get; set; }
         [DataMember(Name = "subject")]

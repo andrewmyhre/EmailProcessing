@@ -29,7 +29,7 @@ namespace EmailProcessing
         [ConfigurationProperty("deliveredLocation", IsRequired = true)]
         public string DeliveredLocation { get { return (string)this["deliveredLocation"]; } set { this["deliveredLocation"] = value; } }
         [ConfigurationProperty("templateLocation", IsRequired = true)]
-        public string TemplateLocation { get; set; }
+        public string TemplateLocation { get { return (string)this["templateLocation"]; } set { this["templateLocation"]=value; } }
     }
 
     public class EmailSenderElement:  ConfigurationElement

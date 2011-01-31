@@ -13,6 +13,7 @@ namespace EmailProcessing
             
             return new EmailTemplate()
             {
+                Name = xdoc.Element(XName.Get("emailTemplate", ns)).Element(XName.Get("name", ns)).Value,
                 From = xdoc.Element(XName.Get("emailTemplate", ns)).Element(XName.Get("from", ns)).Value,
                 Subject = xdoc.Element(XName.Get("emailTemplate", ns)).Element(XName.Get("subject", ns)).Value,
                 Text = xdoc.Element(XName.Get("emailTemplate", ns)).Element(XName.Get("text", ns)).Value,
