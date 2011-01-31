@@ -18,6 +18,8 @@ namespace EmailProcessing
         public string Text { get; set; }
         [DataMember(Name="tokens")]
         public TokenList Tokens { get; set; }
+        [DataMember(Name="templateName")]
+        public string Name { get; set; }
     }
 
     [CollectionDataContract(Name = "tokens", ItemName = "token", Namespace = "http://www.justgiving.com/xml/")]

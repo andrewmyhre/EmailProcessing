@@ -28,6 +28,8 @@ namespace EmailProcessing
         public string FailedLocation { get { return (string)this["failedLocation"]; } set { this["failedLocation"] = value; } }
         [ConfigurationProperty("deliveredLocation", IsRequired = true)]
         public string DeliveredLocation { get { return (string)this["deliveredLocation"]; } set { this["deliveredLocation"] = value; } }
+        [ConfigurationProperty("templateLocation", IsRequired = true)]
+        public string TemplateLocation { get; set; }
     }
 
     public class EmailSenderElement:  ConfigurationElement

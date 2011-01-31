@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <emailTemplate xmlns="emailnamespace">
+    <name>templateName</name>
     <from>testfrom@server.com</from>
     <subject>test email subject</subject>
     <html><![CDATA[html body]]></html>

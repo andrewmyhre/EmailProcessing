@@ -16,6 +16,7 @@ namespace EmailRelay.App.Tests.Unit
         {
             EmailTemplate template = new EmailTemplate()
                                          {
+                                             Name = "template name",
                                              Subject = "subject {token1}",
                                              Text = "text {token2}",
                                              Html = "html {token3}"

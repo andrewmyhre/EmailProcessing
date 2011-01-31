@@ -6,7 +6,12 @@ using System.Text;
 
 namespace EmailProcessing
 {
-    public class TemplateProcessor
+    public interface ITemplateProcessor
+    {
+        EmailPackage CreatePackageFromTemplate(EmailTemplate template, NameValueCollection replacements);
+    }
+
+    public class TemplateProcessor : ITemplateProcessor
     {
         public EmailPackage CreatePackageFromTemplate(EmailTemplate template, NameValueCollection replacements)
         {

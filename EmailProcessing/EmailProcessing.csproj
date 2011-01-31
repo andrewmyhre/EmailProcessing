@@ -46,11 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailFacade.cs" />
     <Compile Include="EmailPackage.cs" />
     <Compile Include="EmailPackageSerialiser.cs" />
     <Compile Include="EmailProcessingConfigurationSection.cs" />
     <Compile Include="EmailSender.cs" />
+    <Compile Include="EmailSenderFactory.cs" />
     <Compile Include="EmailTemplate.cs" />
+    <Compile Include="EmailTemplateManager.cs" />
     <Compile Include="EmailToSendArgs.cs" />
     <Compile Include="EmailWatcher.cs" />
     <Compile Include="IEmailPackageSerialiser.cs" />
