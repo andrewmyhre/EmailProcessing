@@ -1,0 +1,10 @@
+bin/
+obj/
+*_ReSharper*
+*.user
+*.suo
+*.resharper
+Raven.Server/Data
+logs/
+App_Data/
+*Publish.xml

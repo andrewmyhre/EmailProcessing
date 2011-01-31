@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<emailPackage xmlns="http://www.justgiving.com/xml/">
+    <from>testfrom@server.com</from>
+    <subject>test email subject: {subjectToken}</subject>
+    <html>
+        <![CDATA[<p>html body</p>
+        <p>{htmlBodyToken}</p>]]>
+    </html>
+    <text>
+        text body
+        
+        {textBodyToken}
+    </text>
+    <tokens>
+        <token>subjectToken</token>
+        <token>htmlBodyToken</token>
+        <token>textBodyToken</token>
+    </tokens>
+</emailPackage>
