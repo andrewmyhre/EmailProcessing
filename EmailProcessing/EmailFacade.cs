@@ -36,7 +36,7 @@ namespace EmailProcessing
             if (!Directory.Exists(templateLocation)) Directory.CreateDirectory(templateLocation);
         }
 
-        public void AddEmailToQueue(string templateName,
+        public void AddEmailToQueue(string[] to, string templateName,
             Dictionary<string,string> tokenReplacements,
             FileInfo[] fileAttachments)
         {
@@ -50,6 +50,7 @@ namespace EmailProcessing
 
             var package = templateProcessor.CreatePackageFromTemplate(template,
                                                                       nvc);
+            package.To = new RecipientList(to);
             var packageId = Guid.NewGuid();
             foreach (var attachment in fileAttachments)
             {

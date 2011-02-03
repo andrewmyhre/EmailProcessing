@@ -23,9 +23,13 @@ namespace EmailProcessing
         public virtual void SendMail(object sender, EmailToSendArgs e)
         {
             Console.WriteLine("send package " + e.Message.Subject);
-            
+
+            string outputLocation = DeliveredLocation;
+            if (e.SendingFailed)
+                outputLocation = FailedLocation;
+
             // create a directory for the package
-            string deliveryPath = Path.Combine(DeliveredLocation, Guid.NewGuid().ToString());
+            string deliveryPath = Path.Combine(outputLocation, Guid.NewGuid().ToString());
             Directory.CreateDirectory(deliveryPath);
 
             // copy attachments to delivery folder

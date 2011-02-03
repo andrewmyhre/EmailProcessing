@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<emailTemplate xmlns="emailnamespace">
+<emailTemplate xmlns="http://www.tanash.net/email/template">
     <name>templateName</name>
-    <from>testfrom@server.com</from>
+    <from>andrew.myhre@gmail.com</from>
     <subject>test email subject</subject>
     <html><![CDATA[html body]]></html>
     <text>text body</text>

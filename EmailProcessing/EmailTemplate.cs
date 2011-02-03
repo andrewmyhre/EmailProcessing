@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace EmailProcessing
 {
-    [DataContract(Name = "emailPackage", Namespace = "http://www.justgiving.com/xml/")]
+    [DataContract(Name = "emailPackage", Namespace = "http://www.tanash.net/email/package")]
     public class EmailTemplate
     {
         [DataMember(Name="from")]
@@ -22,7 +22,7 @@ namespace EmailProcessing
         public string Name { get; set; }
     }
 
-    [CollectionDataContract(Name = "tokens", ItemName = "token", Namespace = "http://www.justgiving.com/xml/")]
+    [CollectionDataContract(Name = "tokens", ItemName = "token", Namespace = "http://www.tanash.net/email/package")]
     public class TokenList : Collection<string>
     {
         public TokenList() : base()

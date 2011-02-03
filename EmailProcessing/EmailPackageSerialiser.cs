@@ -10,7 +10,7 @@ namespace EmailProcessing
 {
     public class EmailPackageSerialiser : IEmailPackageSerialiser
     {
-        private const string jgNamespace = "http://www.justgiving.com/xml/";
+        private const string jgNamespace = "http://www.tanash.net/email/package";
         public EmailPackageSerialiser()
         {
         }
@@ -18,15 +18,19 @@ namespace EmailProcessing
         public EmailPackage Deserialize(string packageContents)
         {
             XDocument xdoc = XDocument.Parse(packageContents, LoadOptions.None);
+            var serialisedPackage = xdoc.Element(XName.Get("emailPackage", jgNamespace));
             return new EmailPackage()
                 {
-                    From = xdoc.Element(XName.Get("emailPackage", jgNamespace)).Element(XName.Get("from", jgNamespace)).Value,
-                    Subject = xdoc.Element(XName.Get("emailPackage", jgNamespace)).Element(XName.Get("subject", jgNamespace)).Value,
-                    Html=xdoc.Element(XName.Get("emailPackage", jgNamespace)).Element(XName.Get("html", jgNamespace)).Value,
-                    Text= xdoc.Element(XName.Get("emailPackage", jgNamespace)).Element(XName.Get("text", jgNamespace)).Value,
+                    From = serialisedPackage.Element(XName.Get("from", jgNamespace)).Value,
+                    Subject = serialisedPackage.Element(XName.Get("subject", jgNamespace)).Value,
+                    Html=serialisedPackage.Element(XName.Get("html", jgNamespace)).Value,
+                    Text= serialisedPackage.Element(XName.Get("text", jgNamespace)).Value,
+                    To = new RecipientList(from t in serialisedPackage
+                                               .Element(XName.Get("recipients", jgNamespace))
+                                               .Elements(XName.Get("address", jgNamespace))
+                                            select t.Value),
                     Attachments = new AttachmentList(
-                        (from a in xdoc
-                                    .Element(XName.Get("emailPackage", jgNamespace))
+                        (from a in serialisedPackage
                                     .Element(XName.Get("attachments", jgNamespace))
                                     .Elements(XName.Get("attachment", jgNamespace))
                              select a.Value))

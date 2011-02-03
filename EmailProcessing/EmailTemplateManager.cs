@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace EmailProcessing
@@ -29,7 +30,13 @@ namespace EmailProcessing
             var files = dir.GetFiles("*.xml");
             foreach(var file in files)
             {
-                _templates.Add(_templateParser.Parse(File.ReadAllText(file.FullName)));
+                try
+                {
+                    _templates.Add(_templateParser.Parse(File.ReadAllText(file.FullName)));
+                } catch (Exception ex)
+                {
+                    
+                }
             }
         }
     }

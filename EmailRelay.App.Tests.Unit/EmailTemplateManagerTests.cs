@@ -18,7 +18,7 @@ namespace EmailRelay.App.Tests.Unit
 
             Assert.That(template.Name, Is.StringMatching("templateName"));
             Assert.That(template.Subject, Is.StringMatching("test email subject"));
-            Assert.That(template.From, Is.StringMatching("testfrom@server.com"));
+            Assert.That(template.From, Is.StringMatching("andrew.myhre@gmail.com"));
             Assert.That(template.Html, Is.StringMatching("html body"));
             Assert.That(template.Text, Is.StringMatching("text body"));
             Assert.That(template.Tokens, Has.Count.EqualTo(3));

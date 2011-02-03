@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<emailPackage xmlns="http://www.justgiving.com/xml/">
+<emailPackage xmlns="http://www.tanash.net/email/package">
     <from>testfrom@server.com</from>
+    <recipients>
+        <address>testrecipient@test.com</address>
+    </recipients>
     <subject>test email subject: {subjectToken}</subject>
     <html>
         <![CDATA[<p>html body</p>
