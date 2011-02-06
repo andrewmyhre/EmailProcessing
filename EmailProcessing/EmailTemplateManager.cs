@@ -33,8 +33,16 @@ namespace EmailProcessing
             foreach(var file in files)
             {
                 logger.DebugFormat("Loading template {0}", file.FullName);
-                _templates.Add(_templateParser.Parse(File.ReadAllText(file.FullName)));
-                logger.DebugFormat("Finished loading template {0}", file.FullName);
+                try
+                {
+                    _templates.Add(_templateParser.Parse(File.ReadAllText(file.FullName)));
+                    logger.DebugFormat("Finished loading template {0}", file.FullName);
+                }
+                catch (Exception ex)
+                {
+                    logger.Fatal("Failed to load email template " + file.FullName, ex);
+                }
+
             }
         }
     }

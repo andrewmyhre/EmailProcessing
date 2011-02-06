@@ -11,6 +11,17 @@ namespace EmailProcessing
     {
         private ILog logger = LogManager.GetLogger(typeof (AmazonSESEmailSender));
 
+        public AmazonSESEmailSender () : base()
+        {
+            
+        }
+
+        public AmazonSESEmailSender(string deliveredLocation, string failedLocation)
+            : base(deliveredLocation, failedLocation)
+        {
+            
+        }
+
         public override void SendMail(object sender, EmailToSendArgs e)
         {
             using (var ses = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(

@@ -8,5 +8,14 @@ namespace EmailProcessing
     public class NoRelayEmailSender : EmailSender
     {
 
+        public NoRelayEmailSender () : base()
+        {
+            
+        }
+
+        public NoRelayEmailSender(string deliveredLocation, string failedLocation) : base(deliveredLocation, failedLocation)
+        {
+            
+        }
     }
 }

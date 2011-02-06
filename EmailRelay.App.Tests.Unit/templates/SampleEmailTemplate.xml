@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<emailTemplate xmlns="http://www.tanash.net/email/template">
+    <name>templateName</name>
+    <from>andrew.myhre@gmail.com</from>
+    <subject>test email subject</subject>
+    <html><![CDATA[html body]]></html>
+    <text>text body</text>
+    <tokens>
+        <token>subjectToken</token>
+        <token>htmlBodyToken</token>
+        <token>textBodyToken</token>
+    </tokens>
+</emailTemplate>

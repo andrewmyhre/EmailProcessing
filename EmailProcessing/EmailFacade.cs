@@ -15,11 +15,13 @@ namespace EmailProcessing
         private IEmailTemplateManager templateManager = null;
         private ITemplateProcessor templateProcessor = null;
         private IEmailPackageSerialiser _packageSerialiser = null;
+        private IEmailSender _sender = null;
 
-        public EmailFacade(string templateLocation, string pickupLocation)
+        public EmailFacade(string templateLocation, string pickupLocation, IEmailSender sender)
         {
             _templateLocation = templateLocation;
             _pickupLocation = pickupLocation;
+            _sender = sender;
 
             EnsureFolderExists(_templateLocation);
             EnsureFolderExists(_pickupLocation);
@@ -58,7 +60,14 @@ namespace EmailProcessing
             }
 
             var xml = _packageSerialiser.Serialise(package);
-            File.WriteAllText(Path.Combine(_pickupLocation, packageId.ToString() + ".xml"), xml);
+            string packagePath = Path.Combine(_pickupLocation, packageId.ToString() + ".xml");
+            File.WriteAllText(packagePath, xml);
+
+            _sender.SendMail(this, new EmailToSendArgs()
+                                       {
+                                           Message = package,
+                                           PackagePath = packagePath
+                                       });
         }
 
         public void LoadTemplates()
@@ -73,7 +82,13 @@ namespace EmailProcessing
         {
             var configuration =
                 EmailProcessingConfigurationManager.Section;
-            return new EmailFacade(configuration.TemplateLocation, configuration.PickupLocation);
+            IEmailSender sender = null;
+            Type senderType = Type.GetType(EmailProcessingConfigurationManager.Section.EmailSenderType.Type);
+            sender = Activator.CreateInstance(senderType, null) as IEmailSender;
+            return new EmailFacade(
+                configuration.TemplateLocation, 
+                configuration.PickupLocation,
+                sender);
         }
     }
 }
