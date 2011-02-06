@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using log4net;
 
 namespace EmailProcessing
 {
@@ -11,6 +12,7 @@ namespace EmailProcessing
 
     public class EmailTemplateManager : IEmailTemplateManager
     {
+        private static ILog logger = LogManager.GetLogger(typeof (EmailTemplateManager));
         private readonly string _templateFolder;
         private readonly ITemplateParser _templateParser = null;
         private readonly List<EmailTemplate> _templates = new List<EmailTemplate>();
@@ -29,7 +31,9 @@ namespace EmailProcessing
             var files = dir.GetFiles("*.xml");
             foreach(var file in files)
             {
+                logger.DebugFormat("Loading template {0}", file.FullName);
                 _templates.Add(_templateParser.Parse(File.ReadAllText(file.FullName)));
+                logger.DebugFormat("Finished loading template {0}", file.FullName);
             }
         }
     }
