@@ -30,11 +30,21 @@ namespace EmailProcessing
         public string DeliveredLocation { get { return (string)this["deliveredLocation"]; } set { this["deliveredLocation"] = value; } }
         [ConfigurationProperty("templateLocation", IsRequired = true)]
         public string TemplateLocation { get { return (string)this["templateLocation"]; } set { this["templateLocation"]=value; } }
+        [ConfigurationProperty("amazon")]
+        public AmazonElement Amazon { get { return (AmazonElement) this["amazon"]; } }
     }
 
     public class EmailSenderElement:  ConfigurationElement
     {
         [ConfigurationProperty("type", IsRequired = true)]
         public string Type { get { return (string)this["type"]; } set{this["type"]=value;} }
+    }
+
+    public class AmazonElement : ConfigurationElement
+    {
+        [ConfigurationProperty("key", IsRequired = true)]
+        public string Key { get { return (string)this["key"]; } set { this["key"] = value; } }
+        [ConfigurationProperty("secret", IsRequired = true)]
+        public string Secret { get { return (string)this["secret"]; } set { this["secret"] = value; } }
     }
 }

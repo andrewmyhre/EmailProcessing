@@ -19,11 +19,13 @@ namespace EmailRelay.App.Tests.Unit
         public static EmailPackage SamplePackage()
         {
             return new EmailPackage()
-            {
-                From = "test@test.com",
-                Html = "test html {token1}",
-                Text = "test text {token2}",
-                Subject = "test subject {token3}"
+                       {
+                           From = "test@test.com",
+                           Html = "test html {token1}",
+                           Text = "test text {token2}",
+                           Subject = "test subject {token3}",
+                           To = new RecipientList(new string[] {"testrecipient@test.com"}),
+                           Attachments = new AttachmentList(new string[]{"somefile.jpg"})
             };
         }
 
