@@ -17,8 +17,6 @@ namespace EmailProcessing
                 EmailProcessingConfigurationManager.Section.Amazon.Key,
                 EmailProcessingConfigurationManager.Section.Amazon.Secret))
             {
-
-
                 Destination destination = new Destination();
                 destination.WithToAddresses(e.Message.To);
 
@@ -49,6 +47,7 @@ namespace EmailProcessing
 
                 try
                 {
+                    Console.WriteLine("sending email from {0}", e.Message.From);
                     SendEmailResponse response = ses.SendEmail(request);
 
                     SendEmailResult result = response.SendEmailResult;

@@ -5,6 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.Hosting;
 
 namespace EmailProcessing
 {
@@ -73,7 +74,10 @@ namespace EmailProcessing
         {
             var configuration =
                 EmailProcessingConfigurationManager.Section;
-            return new EmailFacade(configuration.TemplateLocation, configuration.PickupLocation);
+            string templateLocation = configuration.TemplateLocation;
+            if (templateLocation.Contains("/"))
+                templateLocation = HostingEnvironment.MapPath(templateLocation);
+            return new EmailFacade(templateLocation, configuration.PickupLocation);
         }
     }
 }
