@@ -53,9 +53,12 @@ namespace EmailProcessing
                                                                       nvc);
             package.To = new RecipientList(to);
             var packageId = Guid.NewGuid();
-            foreach (var attachment in fileAttachments)
+            if (fileAttachments != null)
             {
-                package.Attachments.Add(attachment.FullName);
+                foreach (var attachment in fileAttachments)
+                {
+                    package.Attachments.Add(attachment.FullName);
+                }
             }
 
             var xml = _packageSerialiser.Serialise(package);

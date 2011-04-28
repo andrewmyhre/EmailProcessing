@@ -11,6 +11,7 @@ namespace EmailProcessing
         public EmailPackage()
         {
             Attachments = new AttachmentList();
+            To = new RecipientList();
         }
 
         [DataMember(Name="from")]
