@@ -9,12 +9,14 @@ using System.ServiceProcess;
 using System.Text;
 using Amazon;
 using EmailProcessing;
+using log4net;
 using log4net.Config;
 
 namespace EmailRelayService
 {
     public partial class Service1 : ServiceBase
     {
+        private ILog _log = LogManager.GetLogger(typeof(Service1));
         IEmailPackageSerialiser packageSerializer = null;
         IEmailWatcher watcher = null;
         IEmailSender sender = null;
@@ -45,7 +47,7 @@ namespace EmailRelayService
 
             watcher.StartWatching();
 
-            EventLog.WriteEntry("Email relay service watching " + configuration.PickupLocation);
+            _log.Info("Email relay service watching " + configuration.PickupLocation);
         }
 
         protected override void OnStop()
