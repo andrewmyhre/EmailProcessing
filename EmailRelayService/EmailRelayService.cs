@@ -28,7 +28,7 @@ namespace EmailRelayService
 
         protected override void OnStart(string[] args)
         {
-            XmlConfigurator.Configure();
+            log4net.Config.XmlConfigurator.Configure();
 
             EmailProcessingConfigurationSection configuration = EmailProcessingConfigurationManager.Section;
 
@@ -48,6 +48,12 @@ namespace EmailRelayService
             watcher.StartWatching();
 
             _log.Info("Email relay service watching " + configuration.PickupLocation);
+            var appenders = _log.Logger.Repository.GetAppenders();
+            
+            foreach(var appender in appenders)
+            {
+                EventLog.WriteEntry("Appender: " + appender.Name);
+            }
         }
 
         protected override void OnStop()
