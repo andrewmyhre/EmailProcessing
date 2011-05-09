@@ -1,4 +1,4 @@
-﻿namespace EmailRelay.Service
+﻿namespace EmailRelayService
 {
     partial class ProjectInstaller
     {

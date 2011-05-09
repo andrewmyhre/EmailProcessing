@@ -4,7 +4,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 
-namespace EmailRelay.Service
+namespace EmailRelayService
 {
     static class Program
     {

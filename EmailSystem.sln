@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailRelay.App.Tests.Unit",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailProcessing", "EmailProcessing\EmailProcessing.csproj", "{F511818D-59DF-4358-8946-10FB3933E5B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailRelay.Service", "EmailRelay.Service\EmailRelay.Service.csproj", "{D2C0108C-51AB-41A5-B649-57A13F8DE853}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailRelayService", "EmailRelayService\EmailRelayService.csproj", "{894C4B67-ACBE-480C-A77B-256D38CF2C2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,16 +49,16 @@ Global
 		{F511818D-59DF-4358-8946-10FB3933E5B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F511818D-59DF-4358-8946-10FB3933E5B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F511818D-59DF-4358-8946-10FB3933E5B2}.Release|x86.ActiveCfg = Release|Any CPU
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Debug|x86.ActiveCfg = Debug|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Debug|x86.Build.0 = Debug|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Release|Any CPU.ActiveCfg = Release|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Release|Mixed Platforms.Build.0 = Release|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Release|x86.ActiveCfg = Release|x86
-		{D2C0108C-51AB-41A5-B649-57A13F8DE853}.Release|x86.Build.0 = Release|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Debug|x86.ActiveCfg = Debug|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Debug|x86.Build.0 = Debug|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Release|Any CPU.ActiveCfg = Release|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Release|x86.ActiveCfg = Release|x86
+		{894C4B67-ACBE-480C-A77B-256D38CF2C2A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
