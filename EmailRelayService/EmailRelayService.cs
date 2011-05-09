@@ -14,14 +14,14 @@ using log4net.Config;
 
 namespace EmailRelayService
 {
-    public partial class Service1 : ServiceBase
+    public partial class EmailRelayService : ServiceBase
     {
-        private ILog _log = LogManager.GetLogger(typeof(Service1));
+        private ILog _log = LogManager.GetLogger(typeof(EmailRelayService));
         IEmailPackageSerialiser packageSerializer = null;
         IEmailWatcher watcher = null;
         IEmailSender sender = null;
 
-        public Service1()
+        public EmailRelayService()
         {
             InitializeComponent();
         }

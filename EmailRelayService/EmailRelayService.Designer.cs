@@ -1,6 +1,6 @@
 ﻿namespace EmailRelayService
 {
-    partial class Service1
+    partial class EmailRelayService
     {
         /// <summary> 
         /// Required designer variable.
