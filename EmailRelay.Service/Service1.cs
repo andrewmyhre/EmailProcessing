@@ -1,19 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.ServiceProcess;
 using System.Text;
+using Amazon;
 using Amazon.SimpleEmail.Model;
 using EmailProcessing;
 using log4net.Config;
-using Amazon;
 
-namespace EmailRelay.App
+namespace EmailRelay.Service
 {
-    class Program
+    public partial class Service1 : ServiceBase
     {
-        static void Main(string[] args)
+        public Service1()
+        {
+            InitializeComponent();
+        }
+
+        protected override void OnStart(string[] args)
         {
             XmlConfigurator.Configure();
             IEmailPackageSerialiser packageSerializer = null;
@@ -26,7 +34,7 @@ namespace EmailRelay.App
                                                                                configuration.Amazon.Secret);
             var emails = client.ListVerifiedEmailAddresses(new ListVerifiedEmailAddressesRequest());
             Console.WriteLine("verified emails:");
-            foreach(var email in emails.ListVerifiedEmailAddressesResult.VerifiedEmailAddresses)
+            foreach (var email in emails.ListVerifiedEmailAddressesResult.VerifiedEmailAddresses)
                 Console.WriteLine(email);
 
             try
@@ -35,7 +43,7 @@ namespace EmailRelay.App
                 if (!Directory.Exists(configuration.DeliveredLocation)) Directory.CreateDirectory(configuration.DeliveredLocation);
                 if (!Directory.Exists(configuration.FailedLocation)) Directory.CreateDirectory(configuration.FailedLocation);
 
-                
+
                 packageSerializer = new EmailPackageSerialiser();
                 watcher = new EmailWatcher(packageSerializer);
                 sender = EmailSenderFactory.CreateSenderFromConfiguration();
@@ -54,6 +62,11 @@ namespace EmailRelay.App
                 if (watcher != null)
                     watcher.Dispose();
             }
+        
+        }
+
+        protected override void OnStop()
+        {
         }
     }
 }
