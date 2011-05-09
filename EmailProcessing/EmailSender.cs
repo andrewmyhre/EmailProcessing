@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using log4net;
 
 namespace EmailProcessing
 {
     public abstract class EmailSender : IEmailSender
     {
+        private static ILog logger = LogManager.GetLogger(typeof (EmailSender));
         protected readonly string DeliveredLocation;
         protected readonly string FailedLocation;
 
@@ -22,7 +24,7 @@ namespace EmailProcessing
 
         public virtual void SendMail(object sender, EmailToSendArgs e)
         {
-            Console.WriteLine("send package " + e.Message.Subject);
+            logger.Debug("send package " + e.Message.Subject);
 
             string outputLocation = DeliveredLocation;
             if (e.SendingFailed)

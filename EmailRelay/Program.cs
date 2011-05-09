@@ -4,8 +4,10 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Amazon.SimpleEmail.Model;
 using EmailProcessing;
 using log4net.Config;
+using Amazon;
 
 namespace EmailRelay.App
 {
@@ -13,11 +15,21 @@ namespace EmailRelay.App
     {
         static void Main(string[] args)
         {
+
+
             XmlConfigurator.Configure();
             IEmailPackageSerialiser packageSerializer = null;
             IEmailWatcher watcher = null;
             IEmailSender sender = null;
             EmailProcessingConfigurationSection configuration = EmailProcessingConfigurationManager.Section;
+
+            Console.Clear();
+            var client = AWSClientFactory.CreateAmazonSimpleEmailServiceClient(configuration.Amazon.Key,
+                                                                               configuration.Amazon.Secret);
+            var emails = client.ListVerifiedEmailAddresses(new ListVerifiedEmailAddressesRequest());
+            Console.WriteLine("verified emails:");
+            foreach(var email in emails.ListVerifiedEmailAddressesResult.VerifiedEmailAddresses)
+                Console.WriteLine(email);
 
             try
             {
@@ -32,7 +44,6 @@ namespace EmailRelay.App
 
                 watcher.OnMailToSend += sender.SendMail;
 
-                Console.Clear();
                 Console.WriteLine("Watching " + configuration.PickupLocation + ". Press Esc to stop");
                 watcher.StartWatching();
 
