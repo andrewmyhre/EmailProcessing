@@ -23,8 +23,12 @@ namespace EmailProcessing
                 {
                     From = serialisedPackage.Element(XName.Get("from", jgNamespace)).Value,
                     Subject = serialisedPackage.Element(XName.Get("subject", jgNamespace)).Value,
-                    Html=serialisedPackage.Element(XName.Get("html", jgNamespace)).Value,
-                    Text= serialisedPackage.Element(XName.Get("text", jgNamespace)).Value,
+                    Html= serialisedPackage.Element(XName.Get("html", jgNamespace)) != null
+                    ? serialisedPackage.Element(XName.Get("html", jgNamespace)).Value
+                    : null,
+                    Text= serialisedPackage.Element(XName.Get("text", jgNamespace)) != null
+                    ? serialisedPackage.Element(XName.Get("text", jgNamespace)).Value
+                    : null,
                     To = new RecipientList(from t in serialisedPackage
                                                .Element(XName.Get("recipients", jgNamespace))
                                                .Elements(XName.Get("address", jgNamespace))

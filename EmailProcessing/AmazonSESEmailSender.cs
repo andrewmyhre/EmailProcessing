@@ -26,17 +26,22 @@ namespace EmailProcessing
                 subject.WithCharset("UTF-8");
                 subject.WithData(e.Message.Subject);
 
-                Content html = new Content();
-                html.WithCharset("UTF-8");
-                html.WithData(e.Message.Html);
-
-                Content text = new Content();
-                text.WithCharset("UTF-8");
-                text.WithData(e.Message.Text);
-
                 Body body = new Body();
-                body.WithHtml(html);
-                body.WithText(text);
+                if (!string.IsNullOrWhiteSpace(e.Message.Html))
+                {
+                    Content html = new Content();
+                    html.WithCharset("UTF-8");
+                    html.WithData(e.Message.Html);
+                    body.WithHtml(html);
+                }
+
+                if (!string.IsNullOrWhiteSpace(e.Message.Text))
+                {
+                    Content text = new Content();
+                    text.WithCharset("UTF-8");
+                    text.WithData(e.Message.Text);
+                    body.WithText(text);
+                }
 
                 Message message = new Message();
                 message.WithBody(body);
