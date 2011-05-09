@@ -17,8 +17,12 @@ namespace EmailProcessing
                                        Name = xml.Element(XName.Get("name", ns)).Value,
                                        From = xml.Element(XName.Get("from", ns)).Value,
                                        Subject = xml.Element(XName.Get("subject", ns)).Value,
-                                       Text = xml.Element(XName.Get("text", ns)).Value,
-                                       Html = xml.Element(XName.Get("html", ns)).Value,
+                                       Text = xml.Element(XName.Get("text", ns)) != null
+                                       ? xml.Element(XName.Get("text", ns)).Value
+                                       : null,
+                                       Html = xml.Element(XName.Get("html", ns)) != null
+                                       ? xml.Element(XName.Get("html", ns)).Value
+                                       : null,
                                        Tokens = new TokenList((from t in xml
                                                                    .Element(XName.Get("tokens", ns))
                                                                    .Elements(XName.Get("token", ns))

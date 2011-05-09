@@ -27,8 +27,8 @@ namespace EmailProcessing
             foreach(var key in replacements.AllKeys)
             {
                 package.Subject = package.Subject.Replace("{"+key+"}", replacements[key]);
-                package.Html = package.Html.Replace("{" + key + "}", replacements[key]);
-                package.Text = package.Text.Replace("{" + key + "}", replacements[key]);
+                if (!string.IsNullOrWhiteSpace(package.Html)) package.Html = package.Html.Replace("{" + key + "}", replacements[key]);
+                if (!string.IsNullOrWhiteSpace(package.Text)) package.Text = package.Text.Replace("{" + key + "}", replacements[key]);
             }
 
             return package;
