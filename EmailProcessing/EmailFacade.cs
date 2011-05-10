@@ -62,12 +62,6 @@ namespace EmailProcessing
             var xml = _packageSerialiser.Serialise(package);
             string packagePath = Path.Combine(_pickupLocation, packageId.ToString() + ".xml");
             File.WriteAllText(packagePath, xml);
-
-            _sender.SendMail(this, new EmailToSendArgs()
-                                       {
-                                           Message = package,
-                                           PackagePath = packagePath
-                                       });
         }
 
         public void LoadTemplates()
