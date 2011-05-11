@@ -10,10 +10,20 @@ namespace EmailProcessing
     public class AmazonSESEmailSender : EmailSender
     {
         private ILog logger = LogManager.GetLogger(typeof (AmazonSESEmailSender));
+        private static DateTime _lastSend = DateTime.MinValue;
+        private static DateTime nextCanSend = DateTime.Now;
+        private double _maxSendRate;
 
         public AmazonSESEmailSender () : base()
         {
-            
+            using (var ses = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(
+                EmailProcessingConfigurationManager.Section.Amazon.Key,
+                EmailProcessingConfigurationManager.Section.Amazon.Secret))
+            {
+                var response = ses.GetSendQuota(new GetSendQuotaRequest());
+                _maxSendRate = response.GetSendQuotaResult.MaxSendRate;
+                logger.InfoFormat("Amazon SES max send rate is {0:#.#} emails per second", _maxSendRate);
+            }            
         }
 
         public AmazonSESEmailSender(string deliveredLocation, string failedLocation)
@@ -24,6 +34,9 @@ namespace EmailProcessing
 
         public override void SendMail(object sender, EmailToSendArgs e)
         {
+            if (nextCanSend > DateTime.Now)
+                System.Threading.Thread.Sleep(nextCanSend.Subtract(DateTime.Now));
+
             using (var ses = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(
                 EmailProcessingConfigurationManager.Section.Amazon.Key,
                 EmailProcessingConfigurationManager.Section.Amazon.Secret))
@@ -71,6 +84,8 @@ namespace EmailProcessing
                     logger.Debug("Email sent.");
                     logger.Debug(String.Format("Message ID: {0}",
                                                result.MessageId));
+
+                    nextCanSend = _lastSend.AddSeconds(_maxSendRate);
                 }
                 catch (Exception ex)
                 {

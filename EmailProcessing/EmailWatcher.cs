@@ -93,8 +93,17 @@ namespace EmailProcessing
                 lock (lockObject)
                 {
                     if (File.Exists(Path.Combine(outputLocation, key.ToString() + ".xml")))
-                        File.Delete(Path.Combine(outputLocation, key.ToString() + ".xml"));
-
+                    {
+                        try
+                        {
+                            File.Delete(Path.Combine(outputLocation, key.ToString() + ".xml"));
+                        }  catch (Exception deleteException)
+                        {
+                            // probably something using the file... abort
+                            log.WarnFormat("Could not move email package to output location, probably in use. Will retry later.\nSource: {0}\nLocation:{1}",packagePath, Path.Combine(outputLocation, key.ToString() + ".xml"));
+                            continue;
+                        }
+                    }
                     File.Move(packagePath, Path.Combine(outputLocation, key.ToString() + ".xml"));
 
                     EmailQueue.Remove(key);
@@ -140,7 +149,19 @@ namespace EmailProcessing
             if (!Guid.TryParse(Path.GetFileNameWithoutExtension(path), out id))
             {
                 log.WarnFormat("{0} does not appear to be a valid email package", path);
-                File.Move(path, Path.Combine(_failedLocation, Path.GetFileName(path)));
+                if (File.Exists(Path.Combine(_failedLocation, Path.GetFileName(path))))
+                {
+                    try
+                    {
+                        File.Delete(Path.Combine(_failedLocation, Path.GetFileName(path)));
+                        File.Move(path, Path.Combine(_failedLocation, Path.GetFileName(path)));
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    
+                }
+                
                 return;
             }
             
