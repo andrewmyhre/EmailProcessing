@@ -37,7 +37,7 @@ namespace EmailRelay.App
 
                 
                 packageSerializer = new EmailPackageSerialiser();
-                watcher = new EmailWatcher(packageSerializer);
+                watcher = new EmailWatcher(packageSerializer, configuration);
                 sender = EmailSenderFactory.CreateSenderFromConfiguration();
 
                 watcher.OnMailToSend += sender.SendMail;

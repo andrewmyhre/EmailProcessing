@@ -40,7 +40,7 @@ namespace EmailRelayService
             if (!Directory.Exists(configuration.FailedLocation)) Directory.CreateDirectory(configuration.FailedLocation);
 
             packageSerializer = new EmailPackageSerialiser();
-            watcher = new EmailWatcher(packageSerializer);
+            watcher = new EmailWatcher(packageSerializer, configuration);
             sender = EmailSenderFactory.CreateSenderFromConfiguration();
 
             watcher.OnMailToSend += sender.SendMail;

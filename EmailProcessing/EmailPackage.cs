@@ -5,8 +5,8 @@ using System.Runtime.Serialization;
 
 namespace EmailProcessing
 {
-    [DataContract(Name = "emailPackage", Namespace = "http://www.tanash.net/email/package")]
-    public class EmailPackage
+    [DataContract(Name = "emailPackage", Namespace = Constants.XmlNamespace)]
+    public class EmailPackage : IEmailPackage
     {
         public EmailPackage()
         {
@@ -26,9 +26,11 @@ namespace EmailProcessing
         public AttachmentList Attachments { get; set; }
         [DataMember(Name="recipients")]
         public RecipientList To { get; set; }
+        [IgnoreDataMember]
+        public string PackageLocation { get; set; }
     }
 
-    [CollectionDataContract(Name = "attachments", ItemName = "attachment", Namespace = "http://www.tanash.net/email/package")]
+    [CollectionDataContract(Name = "attachments", ItemName = "attachment", Namespace = Constants.XmlNamespace)]
     public class AttachmentList : Collection<string>
     {
         public AttachmentList() : base()
@@ -42,7 +44,7 @@ namespace EmailProcessing
         }
     }
 
-    [CollectionDataContract(Name = "recipients", ItemName = "address", Namespace = "http://www.tanash.net/email/package")]
+    [CollectionDataContract(Name = "recipients", ItemName = "address", Namespace = Constants.XmlNamespace)]
     public class RecipientList : Collection<string>
     {
         public RecipientList() : base()

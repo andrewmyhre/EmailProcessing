@@ -52,16 +52,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmazonSESEmailSender.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="EmailFacade.cs" />
     <Compile Include="EmailPackage.cs" />
     <Compile Include="EmailPackageSerialiser.cs" />
     <Compile Include="EmailProcessingConfigurationSection.cs" />
+    <Compile Include="EmailQueue.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailSenderFactory.cs" />
     <Compile Include="EmailTemplate.cs" />
     <Compile Include="EmailTemplateManager.cs" />
     <Compile Include="EmailToSendArgs.cs" />
     <Compile Include="EmailWatcher.cs" />
+    <Compile Include="IEmailPackage.cs" />
     <Compile Include="IEmailPackageSerialiser.cs" />
     <Compile Include="IEmailSender.cs" />
     <Compile Include="IEmailWatcher.cs" />
@@ -75,17 +78,17 @@
     <Content Include="lib\AWSSDK.dll" />
     <Content Include="lib\log4net.dll" />
   </ItemGroup>
-    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-    <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.-->
   <Target Name="BeforeBuild">
-      <PropertyGroup>
-          <Version>$(BUILD_NUMBER)</Version>
-      </PropertyGroup>
-      <!--Modify Assembly Info-->
-      <AssemblyInfo CodeLanguage="CS" OutputFile="Properties\AssemblyInfo.cs" AssemblyCopyright="Copyright © your company 2009" AssemblyVersion="$(Version)" AssemblyFileVersion="$(Version)" />
+    <PropertyGroup>
+      <Version>$(BUILD_NUMBER)</Version>
+    </PropertyGroup>
+    <!--Modify Assembly Info-->
+    <AssemblyInfo CodeLanguage="CS" OutputFile="Properties\AssemblyInfo.cs" AssemblyCopyright="Copyright © your company 2009" AssemblyVersion="$(Version)" AssemblyFileVersion="$(Version)" />
   </Target>
   <!--<Target Name="AfterBuild">
   </Target>

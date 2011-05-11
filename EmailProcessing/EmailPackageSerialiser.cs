@@ -10,33 +10,28 @@ namespace EmailProcessing
 {
     public class EmailPackageSerialiser : IEmailPackageSerialiser
     {
-        private const string jgNamespace = "http://www.tanash.net/email/package";
-        public EmailPackageSerialiser()
-        {
-        }
-
         public EmailPackage Deserialize(string packageContents)
         {
             XDocument xdoc = XDocument.Parse(packageContents, LoadOptions.None);
-            var serialisedPackage = xdoc.Element(XName.Get("emailPackage", jgNamespace));
+            var serialisedPackage = xdoc.Element(XName.Get("emailPackage", Constants.XmlNamespace));
             return new EmailPackage()
                 {
-                    From = serialisedPackage.Element(XName.Get("from", jgNamespace)).Value,
-                    Subject = serialisedPackage.Element(XName.Get("subject", jgNamespace)).Value,
-                    Html= serialisedPackage.Element(XName.Get("html", jgNamespace)) != null
-                    ? serialisedPackage.Element(XName.Get("html", jgNamespace)).Value
+                    From = serialisedPackage.Element(XName.Get("from", Constants.XmlNamespace)).Value,
+                    Subject = serialisedPackage.Element(XName.Get("subject", Constants.XmlNamespace)).Value,
+                    Html= serialisedPackage.Element(XName.Get("html", Constants.XmlNamespace)) != null
+                    ? serialisedPackage.Element(XName.Get("html", Constants.XmlNamespace)).Value
                     : null,
-                    Text= serialisedPackage.Element(XName.Get("text", jgNamespace)) != null
-                    ? serialisedPackage.Element(XName.Get("text", jgNamespace)).Value
+                    Text= serialisedPackage.Element(XName.Get("text", Constants.XmlNamespace)) != null
+                    ? serialisedPackage.Element(XName.Get("text", Constants.XmlNamespace)).Value
                     : null,
                     To = new RecipientList(from t in serialisedPackage
-                                               .Element(XName.Get("recipients", jgNamespace))
-                                               .Elements(XName.Get("address", jgNamespace))
+                                               .Element(XName.Get("recipients", Constants.XmlNamespace))
+                                               .Elements(XName.Get("address", Constants.XmlNamespace))
                                             select t.Value),
                     Attachments = new AttachmentList(
                         (from a in serialisedPackage
-                                    .Element(XName.Get("attachments", jgNamespace))
-                                    .Elements(XName.Get("attachment", jgNamespace))
+                                    .Element(XName.Get("attachments", Constants.XmlNamespace))
+                                    .Elements(XName.Get("attachment", Constants.XmlNamespace))
                              select a.Value))
                                 
                 };
