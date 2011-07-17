@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace EmailProcessing
 {
     [DataContract(Name = "emailPackage", Namespace = Constants.XmlNamespace)]
+    [System.Xml.Serialization.XmlRoot(ElementName="emailPackage", Namespace=Constants.XmlNamespace)]
     public class EmailPackage : IEmailPackage
     {
         public EmailPackage()
@@ -15,11 +19,22 @@ namespace EmailProcessing
         }
 
         [DataMember(Name="from")]
+        [XmlElement("from")]
         public string From { get; set; }
         [DataMember(Name = "subject")]
         public string Subject { get; set;}
-        [DataMember(Name = "html")]
+        [XmlIgnore]
         public string Html { get; set; }
+        [XmlElement("html")]
+        [DataMember(Name = "html")]
+        public XmlCDataSection HtmlCData
+        {
+            get
+            {
+                return new XmlDocument().CreateCDataSection(Html);
+            }
+            set { Html = value.Value; }
+        }
         [DataMember(Name = "text")]
         public string Text { get; set; }
         [DataMember(Name = "attachments")]

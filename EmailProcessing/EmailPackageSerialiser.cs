@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace EmailProcessing
 {
@@ -39,11 +40,12 @@ namespace EmailProcessing
 
         public string Serialise(EmailPackage package)
         {
-            DataContractSerializer serialiser = new DataContractSerializer(typeof(EmailPackage));
+            //DataContractSerializer serialiser = new DataContractSerializer(typeof(EmailPackage));
+            XmlSerializer serialiser = new XmlSerializer(typeof(EmailPackage));
 
             StringBuilder sb = new StringBuilder();
             XmlWriter xw = XmlWriter.Create(sb);
-            serialiser.WriteObject(xw, package);
+            serialiser.Serialize(xw, package);
             xw.Flush();
             xw.Close();
 

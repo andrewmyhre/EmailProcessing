@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EmailProcessing
 {
-    public class EmailFacade
+    public class EmailFacade : IEmailFacade
     {
         private readonly string _templateLocation;
         private readonly string _pickupLocation;
@@ -38,7 +38,54 @@ namespace EmailProcessing
             if (!Directory.Exists(templateLocation)) Directory.CreateDirectory(templateLocation);
         }
 
-        public void AddEmailToQueue(string[] to, string templateName,
+        public void Send<T>(string to, string templateName, T model)
+        {
+            Send(new[] {to}, templateName, model);
+        }
+
+        public void Send<T>(string[] to, string templateName,
+            T model)
+        {
+            Send(to, templateName, model, null);
+        }
+
+        public void Send<T>(string[] to, string templateName,
+            T model,
+            FileInfo[] fileAttachments)
+        {
+            var template = templateManager.Templates.Where(t => t.Name == templateName).FirstOrDefault();
+            if (template == null)
+                throw new ArgumentException("No such template " + templateName);
+
+            var package = templateProcessor.CreatePackageFromTemplate(template, model);
+            package.To = new RecipientList(to);
+            var packageId = string.Format("{0}-{1}", templateName, DateTime.Now.Ticks);
+
+            if (fileAttachments != null)
+            {
+                foreach (var attachment in fileAttachments)
+                {
+                    package.Attachments.Add(attachment.FullName);
+                }
+            }
+
+            var xml = _packageSerialiser.Serialise(package);
+            string packagePath = Path.Combine(_pickupLocation, packageId.ToString() + ".xml");
+            File.WriteAllText(packagePath, xml);
+          
+        }
+
+        public void Send(string to, string templateName, Dictionary<string, string> tokenReplacements)
+        {
+            Send(new string[] { to }, templateName, tokenReplacements, null);
+        }
+
+        public void Send(string[] to, string templateName, Dictionary<string, string> tokenReplacements)
+        {
+            Send(to, templateName, tokenReplacements, null);
+        }
+
+        public void Send(string[] to, string templateName,
             Dictionary<string,string> tokenReplacements,
             FileInfo[] fileAttachments)
         {
@@ -54,9 +101,13 @@ namespace EmailProcessing
                                                                       nvc);
             package.To = new RecipientList(to);
             var packageId = Guid.NewGuid();
-            foreach (var attachment in fileAttachments)
+
+            if (fileAttachments != null)
             {
-                package.Attachments.Add(attachment.FullName);
+                foreach (var attachment in fileAttachments)
+                {
+                    package.Attachments.Add(attachment.FullName);
+                }
             }
 
             var xml = _packageSerialiser.Serialise(package);

@@ -22,11 +22,7 @@ namespace EmailProcessing
                                        : null,
                                        Html = xml.Element(XName.Get("html", ns)) != null
                                        ? xml.Element(XName.Get("html", ns)).Value
-                                       : null,
-                                       Tokens = new TokenList((from t in xml
-                                                                   .Element(XName.Get("tokens", ns))
-                                                                   .Elements(XName.Get("token", ns))
-                                                               select t.Value).ToArray())
+                                       : null
                                    };
                 return template;
         }

@@ -39,11 +39,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\lib\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,12 +71,13 @@
     <Compile Include="EmailTemplateManager.cs" />
     <Compile Include="EmailToSendArgs.cs" />
     <Compile Include="EmailWatcher.cs" />
+    <Compile Include="IEmailFacade.cs" />
     <Compile Include="IEmailPackage.cs" />
     <Compile Include="IEmailPackageSerialiser.cs" />
     <Compile Include="IEmailSender.cs" />
     <Compile Include="IEmailWatcher.cs" />
     <Compile Include="ITemplateParser.cs" />
-    <Compile Include="NoRelayEmailSender.cs" />
+    <Compile Include="PickupDirectoryEmailSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="TemplateProcessor.cs" />
