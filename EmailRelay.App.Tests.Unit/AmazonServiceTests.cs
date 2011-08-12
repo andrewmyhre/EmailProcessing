@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,17 +18,20 @@ namespace EmailRelay.App.Tests.Unit
     [Ignore]
     public class AmazonServiceTests
     {
+        private EmailProcessingConfigurationSection _configuration;
+
         [TestCase("andrew.myhre@gmail.com")]
         public void VerifyEmail(string email)
         {
-            AmazonSESEmailSender aSes = new AmazonSESEmailSender();
+            _configuration = ConfigurationManager.GetSection("emailProcessing") as EmailProcessingConfigurationSection;
+            AmazonSESEmailSender aSes = new AmazonSESEmailSender(_configuration);
             aSes.VerifyEmail(email);
         }
 
         [Test]
         public void SendEmail()
         {
-            var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(EmailProcessingConfigurationManager.Section.Amazon.Key, EmailProcessingConfigurationManager.Section.Amazon.Secret);
+            var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(_configuration.Amazon.Key, _configuration.Amazon.Secret);
 
             Destination destination = new Destination();
             destination.WithToAddresses("andrew.myhre@gmail.com");
@@ -69,7 +73,7 @@ namespace EmailRelay.App.Tests.Unit
         [Test]
         public void SendEmailWithAttachment()
         {
-            var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(EmailProcessingConfigurationManager.Section.Amazon.Key, EmailProcessingConfigurationManager.Section.Amazon.Secret);
+            var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(_configuration.Amazon.Key, _configuration.Amazon.Secret);
 
             MailMessage m = new MailMessage();
             var attachment = new Attachment("TextFile1.txt", "text/plain");
@@ -113,7 +117,7 @@ Content-Disposition: attachment
 =EF=BB=BFtext file
 ----boundary_0_6c21630e-f7ee-4968-97de-1940cd84094f--
 ";
-            var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(EmailProcessingConfigurationManager.Section.Amazon.Key, EmailProcessingConfigurationManager.Section.Amazon.Secret);
+            var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(_configuration.Amazon.Key, _configuration.Amazon.Secret);
             MemoryStream ms = new MemoryStream();
             StreamWriter sw = new StreamWriter(ms);
             sw.Write(raw);

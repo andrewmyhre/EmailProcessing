@@ -120,20 +120,4 @@ namespace EmailProcessing
             templateManager.LoadTemplates();
         }
     }
-
-    public static class EmailFacadeFactory
-    {
-        public static EmailFacade CreateFromConfiguration()
-        {
-            var configuration =
-                EmailProcessingConfigurationManager.Section;
-            IEmailSender sender = null;
-            Type senderType = Type.GetType(EmailProcessingConfigurationManager.Section.EmailSenderType.Type);
-            sender = Activator.CreateInstance(senderType, null) as IEmailSender;
-            return new EmailFacade(
-                configuration.TemplateLocation, 
-                configuration.PickupLocation,
-                sender);
-        }
-    }
 }

@@ -30,7 +30,7 @@ namespace EmailRelayService
         {
             log4net.Config.XmlConfigurator.Configure();
 
-            EmailProcessingConfigurationSection configuration = EmailProcessingConfigurationManager.Section;
+            EmailProcessingConfigurationSection configuration = EmailProcessingConfigurationManager.GetConfiguration();
 
             var client = AWSClientFactory.CreateAmazonSimpleEmailServiceClient(configuration.Amazon.Key,
                                                                    configuration.Amazon.Secret);
@@ -41,7 +41,7 @@ namespace EmailRelayService
 
             packageSerializer = new EmailPackageSerialiser();
             watcher = new EmailWatcher(packageSerializer, configuration);
-            sender = EmailSenderFactory.CreateSenderFromConfiguration();
+            sender = EmailSenderFactory.CreateSenderFromConfiguration(configuration);
 
             watcher.OnMailToSend += sender.SendMail;
 

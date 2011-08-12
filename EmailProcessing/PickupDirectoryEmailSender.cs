@@ -8,7 +8,8 @@ namespace EmailProcessing
     public class PickupDirectoryEmailSender : EmailSender
     {
 
-        public PickupDirectoryEmailSender () : base()
+        public PickupDirectoryEmailSender(EmailProcessingConfigurationSection configuration)
+            : base(configuration)
         {
             
         }

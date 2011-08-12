@@ -15,11 +15,12 @@ namespace EmailRelay.App
     {
         static void Main(string[] args)
         {
+            EmailProcessingConfigurationSection configuration = EmailProcessingConfigurationManager.GetConfiguration();
+
             XmlConfigurator.Configure();
             IEmailPackageSerialiser packageSerializer = null;
             IEmailWatcher watcher = null;
             IEmailSender sender = null;
-            EmailProcessingConfigurationSection configuration = EmailProcessingConfigurationManager.Section;
 
             Console.Clear();
             var client = AWSClientFactory.CreateAmazonSimpleEmailServiceClient(configuration.Amazon.Key,
@@ -38,7 +39,7 @@ namespace EmailRelay.App
                 
                 packageSerializer = new EmailPackageSerialiser();
                 watcher = new EmailWatcher(packageSerializer, configuration);
-                sender = EmailSenderFactory.CreateSenderFromConfiguration();
+                sender = EmailSenderFactory.CreateSenderFromConfiguration(configuration);
 
                 watcher.OnMailToSend += sender.SendMail;
 

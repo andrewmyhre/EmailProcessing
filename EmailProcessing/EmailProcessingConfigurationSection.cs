@@ -9,12 +9,11 @@ namespace EmailProcessing
 {
     public static class EmailProcessingConfigurationManager
     {
-        public static EmailProcessingConfigurationSection Section
+        public static EmailProcessingConfigurationSection GetConfiguration()
         {
-            get
-            {
-                return ConfigurationManager.GetSection("emailProcessing") as EmailProcessingConfigurationSection;
-            }
+            var configMap = new ExeConfigurationFileMap() { ExeConfigFilename = "EmailProcessing.config"};
+            var config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+            return config.GetSection("emailProcessing") as EmailProcessingConfigurationSection;
         }
     }
 

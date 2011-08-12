@@ -10,10 +10,10 @@ namespace EmailProcessing
         protected readonly string DeliveredLocation;
         protected readonly string FailedLocation;
 
-        public EmailSender()
+        public EmailSender(EmailProcessingConfigurationSection configuration)
         {
-            DeliveredLocation = EmailProcessingConfigurationManager.Section.DeliveredLocation;
-            FailedLocation = EmailProcessingConfigurationManager.Section.FailedLocation;
+            DeliveredLocation = configuration.DeliveredLocation;
+            FailedLocation = configuration.FailedLocation;
         }
 
         public EmailSender(string deliveredLocation, string failedLocation)

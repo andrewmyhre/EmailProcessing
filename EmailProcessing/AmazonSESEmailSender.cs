@@ -9,21 +9,24 @@ namespace EmailProcessing
 {
     public class AmazonSESEmailSender : EmailSender
     {
+        private readonly EmailProcessingConfigurationSection _configuration;
         private ILog logger = LogManager.GetLogger(typeof (AmazonSESEmailSender));
         private static DateTime _lastSend = DateTime.MinValue;
         private static DateTime nextCanSend = DateTime.Now;
         private double _maxSendRate;
 
-        public AmazonSESEmailSender () : base()
+        public AmazonSESEmailSender(EmailProcessingConfigurationSection configuration)
+            : base(configuration)
         {
+            _configuration = configuration;
             using (var ses = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(
-                EmailProcessingConfigurationManager.Section.Amazon.Key,
-                EmailProcessingConfigurationManager.Section.Amazon.Secret))
+                configuration.Amazon.Key,
+                configuration.Amazon.Secret))
             {
                 var response = ses.GetSendQuota(new GetSendQuotaRequest());
                 _maxSendRate = response.GetSendQuotaResult.MaxSendRate;
                 logger.InfoFormat("Amazon SES max send rate is {0:#.#} emails per second", _maxSendRate);
-            }            
+            }
         }
 
         public AmazonSESEmailSender(string deliveredLocation, string failedLocation)
@@ -38,8 +41,8 @@ namespace EmailProcessing
                 System.Threading.Thread.Sleep(nextCanSend.Subtract(DateTime.Now));
 
             using (var ses = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(
-                EmailProcessingConfigurationManager.Section.Amazon.Key,
-                EmailProcessingConfigurationManager.Section.Amazon.Secret))
+                _configuration.Amazon.Key,
+                _configuration.Amazon.Secret))
             {
                 Destination destination = new Destination();
                 destination.WithToAddresses(e.Message.To);
@@ -100,8 +103,8 @@ namespace EmailProcessing
         public void VerifyEmail(string email)
         {
             using (var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(
-                EmailProcessingConfigurationManager.Section.Amazon.Key,
-                EmailProcessingConfigurationManager.Section.Amazon.Secret))
+                _configuration.Amazon.Key,
+                _configuration.Amazon.Secret))
             {
 
                 client.VerifyEmailAddress(new VerifyEmailAddressRequest() {EmailAddress = email});
