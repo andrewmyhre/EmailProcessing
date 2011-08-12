@@ -38,7 +38,7 @@ namespace EmailProcessing
                 };
         }
 
-        public string Serialise(EmailPackage package)
+        public string Serialise(IEmailPackage package)
         {
             //DataContractSerializer serialiser = new DataContractSerializer(typeof(EmailPackage));
             XmlSerializer serialiser = new XmlSerializer(typeof(EmailPackage));

@@ -81,7 +81,7 @@
     <Compile Include="IEmailSender.cs" />
     <Compile Include="IEmailWatcher.cs" />
     <Compile Include="ITemplateParser.cs" />
-    <Compile Include="PickupDirectoryEmailSender.cs" />
+    <Compile Include="FileSystemEmailPackageRelayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="TemplateProcessor.cs" />

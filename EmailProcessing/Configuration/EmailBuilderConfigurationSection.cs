@@ -7,6 +7,6 @@ namespace EmailProcessing.Configuration
         [ConfigurationProperty("pickupLocation", IsRequired = true)]
         public string PickupLocation { get { return (string)this["pickupLocation"]; } set { this["pickupLocation"] = value; } }
         [ConfigurationProperty("emailBuilder", IsRequired = true)]
-        public EmailSenderElement EmailSenderType { get { return (EmailSenderElement)this["emailSender"]; } set { this["emailSender"] = value; } }
+        public EmailSenderElement EmailSenderType { get { return (EmailSenderElement)this["emailBuilder"]; } set { this["emailBuilder"] = value; } }
     }
 }

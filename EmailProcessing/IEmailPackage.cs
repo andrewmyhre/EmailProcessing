@@ -21,5 +21,8 @@ namespace EmailProcessing
 
         [DataMember(Name = "recipients")]
         RecipientList To { get; set; }
+
+        [DataMember(Name = "identifier")]
+        string Identifier { get; set; }
     }
 }

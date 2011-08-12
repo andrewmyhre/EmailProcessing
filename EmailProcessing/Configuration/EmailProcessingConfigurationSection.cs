@@ -12,8 +12,6 @@ namespace EmailProcessing.Configuration
         public string FailedLocation { get { return (string)this["failedLocation"]; } set { this["failedLocation"] = value; } }
         [ConfigurationProperty("deliveredLocation", IsRequired = true)]
         public string DeliveredLocation { get { return (string)this["deliveredLocation"]; } set { this["deliveredLocation"] = value; } }
-        [ConfigurationProperty("templateLocation", IsRequired = true)]
-        public string TemplateLocation { get { return (string)this["templateLocation"]; } set { this["templateLocation"]=value; } }
         [ConfigurationProperty("amazon")]
         public AmazonElement Amazon { get { return (AmazonElement) this["amazon"]; } }
     }

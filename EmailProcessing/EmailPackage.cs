@@ -43,6 +43,8 @@ namespace EmailProcessing
         public RecipientList To { get; set; }
         [IgnoreDataMember]
         public string PackageLocation { get; set; }
+        [DataMember(Name="identifier")]
+        public string Identifier { get; set; }
     }
 
     [CollectionDataContract(Name = "attachments", ItemName = "attachment", Namespace = Constants.XmlNamespace)]

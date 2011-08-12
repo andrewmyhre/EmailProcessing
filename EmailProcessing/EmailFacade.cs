@@ -5,6 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using EmailProcessing.Configuration;
 
 namespace EmailProcessing
 {
@@ -15,13 +16,20 @@ namespace EmailProcessing
         private IEmailTemplateManager templateManager = null;
         private ITemplateProcessor templateProcessor = null;
         private IEmailPackageSerialiser _packageSerialiser = null;
-        private IEmailSender _sender = null;
+        private IEmailPackageRelayer _packageRelayer = null;
 
-        public EmailFacade(string templateLocation, string pickupLocation, IEmailSender sender)
+        public EmailFacade(EmailBuilderConfigurationSection configuration)
+            : this(configuration.EmailSenderType.TemplateLocation, configuration.PickupLocation,
+            Activator.CreateInstance(Type.GetType(configuration.EmailSenderType.Type), configuration) as IEmailPackageRelayer)
+        {
+            
+        }
+
+        public EmailFacade(string templateLocation, string pickupLocation, IEmailPackageRelayer packageRelayer)
         {
             _templateLocation = templateLocation;
             _pickupLocation = pickupLocation;
-            _sender = sender;
+            _packageRelayer = packageRelayer;
 
             EnsureFolderExists(_templateLocation);
             EnsureFolderExists(_pickupLocation);
@@ -59,7 +67,6 @@ namespace EmailProcessing
 
             var package = templateProcessor.CreatePackageFromTemplate(template, model);
             package.To = new RecipientList(to);
-            var packageId = string.Format("{0}-{1}", templateName, DateTime.Now.Ticks);
 
             if (fileAttachments != null)
             {
@@ -69,9 +76,7 @@ namespace EmailProcessing
                 }
             }
 
-            var xml = _packageSerialiser.Serialise(package);
-            string packagePath = Path.Combine(_pickupLocation, packageId.ToString() + ".xml");
-            File.WriteAllText(packagePath, xml);
+            _packageRelayer.Relay(package);
           
         }
 
@@ -94,13 +99,15 @@ namespace EmailProcessing
                 throw new ArgumentException("No such template " + templateName);
 
             NameValueCollection nvc = new NameValueCollection();
-            foreach(var token in tokenReplacements)
-                nvc.Add(token.Key, token.Value);
+            if (tokenReplacements != null)
+            {
+                foreach (var token in tokenReplacements)
+                    nvc.Add(token.Key, token.Value);
+            }
 
             var package = templateProcessor.CreatePackageFromTemplate(template,
                                                                       nvc);
             package.To = new RecipientList(to);
-            var packageId = Guid.NewGuid();
 
             if (fileAttachments != null)
             {
@@ -110,9 +117,7 @@ namespace EmailProcessing
                 }
             }
 
-            var xml = _packageSerialiser.Serialise(package);
-            string packagePath = Path.Combine(_pickupLocation, packageId.ToString() + ".xml");
-            File.WriteAllText(packagePath, xml);
+            _packageRelayer.Relay(package);
         }
 
         public void LoadTemplates()

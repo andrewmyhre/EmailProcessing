@@ -11,21 +11,22 @@ namespace EmailProcessing
 {
     public interface ITemplateProcessor
     {
-        EmailPackage CreatePackageFromTemplate(EmailTemplate template, NameValueCollection replacements);
-        EmailPackage CreatePackageFromTemplate<T>(EmailTemplate template, T model);
+        IEmailPackage CreatePackageFromTemplate(EmailTemplate template, NameValueCollection replacements);
+        IEmailPackage CreatePackageFromTemplate<T>(EmailTemplate template, T model);
     }
 
     public class TemplateProcessor : ITemplateProcessor
     {
         private ILog _log = LogManager.GetLogger(typeof (TemplateProcessor));
-        public EmailPackage CreatePackageFromTemplate(EmailTemplate template, NameValueCollection replacements)
+        public IEmailPackage CreatePackageFromTemplate(EmailTemplate template, NameValueCollection replacements)
         {
             EmailPackage package = new EmailPackage()
                                        {
                                            Subject = template.Subject,
                                            Html = template.Html,
                                            Text = template.Text,
-                                           From = template.From
+                                           From = template.From,
+                                           Identifier = string.Format("{0}-{1}", template.Name, DateTime.Now.Ticks)
                                        };
 
             foreach(var key in replacements.AllKeys)
@@ -38,14 +39,15 @@ namespace EmailProcessing
             return package;
         }
 
-        public EmailPackage CreatePackageFromTemplate<T>(EmailTemplate template, T model)
+        public IEmailPackage CreatePackageFromTemplate<T>(EmailTemplate template, T model)
         {
             EmailPackage package = new EmailPackage()
             {
                 Subject = template.Subject,
                 Html = template.Html,
                 Text = template.Text,
-                From = template.From
+                From = template.From,
+                Identifier = string.Format("{0}-{1}", template.Name, DateTime.Now.Ticks)
             };
 
             try
