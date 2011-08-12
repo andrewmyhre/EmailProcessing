@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Amazon.SimpleEmail.Model;
+using EmailProcessing.Configuration;
 using log4net;
 
 namespace EmailProcessing

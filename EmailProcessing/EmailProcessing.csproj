@@ -59,11 +59,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmazonSESEmailSender.cs" />
+    <Compile Include="Configuration\AmazonElement.cs" />
+    <Compile Include="Configuration\EmailBuilderConfigurationSection.cs" />
+    <Compile Include="Configuration\EmailProcessingConfigurationManager.cs" />
+    <Compile Include="Configuration\EmailProcessingConfigurationSection.cs" />
+    <Compile Include="Configuration\EmailSenderElement.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EmailFacade.cs" />
     <Compile Include="EmailPackage.cs" />
     <Compile Include="EmailPackageSerialiser.cs" />
-    <Compile Include="EmailProcessingConfigurationSection.cs" />
     <Compile Include="EmailQueue.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailSenderFactory.cs" />

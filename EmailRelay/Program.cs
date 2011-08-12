@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Amazon.SimpleEmail.Model;
 using EmailProcessing;
+using EmailProcessing.Configuration;
 using log4net.Config;
 using Amazon;
 

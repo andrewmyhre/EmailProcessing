@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using Amazon.SimpleEmail.Model;
 using EmailProcessing;
+using EmailProcessing.Configuration;
 using NUnit.Framework;
 
 namespace EmailRelay.App.Tests.Unit

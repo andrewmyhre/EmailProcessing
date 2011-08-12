@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using EmailProcessing.Configuration;
 using log4net;
 
 namespace EmailProcessing

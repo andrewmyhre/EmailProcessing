@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using EmailProcessing.Configuration;
 using log4net;
 
 namespace EmailProcessing

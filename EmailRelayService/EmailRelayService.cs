@@ -9,6 +9,7 @@ using System.ServiceProcess;
 using System.Text;
 using Amazon;
 using EmailProcessing;
+using EmailProcessing.Configuration;
 using log4net;
 using log4net.Config;
 

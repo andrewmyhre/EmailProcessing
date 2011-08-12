@@ -1,4 +1,5 @@
 ﻿using System;
+using EmailProcessing.Configuration;
 
 namespace EmailProcessing
 {
