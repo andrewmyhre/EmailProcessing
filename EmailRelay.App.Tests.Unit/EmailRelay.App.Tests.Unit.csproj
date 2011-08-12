@@ -58,12 +58,6 @@
     <Compile Include="TemplateProcessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EmailProcessing\EmailProcessing.csproj">
-      <Project>{F511818D-59DF-4358-8946-10FB3933E5B2}</Project>
-      <Name>EmailProcessing</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="attachment.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -85,6 +79,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EmailProcessing\EmailProcessing.csproj">
+      <Project>{F511818D-59DF-4358-8946-10FB3933E5B2}</Project>
+      <Name>EmailProcessing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

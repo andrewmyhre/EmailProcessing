@@ -106,7 +106,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+    <Import Project="..\lib\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

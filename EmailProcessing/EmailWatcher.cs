@@ -100,7 +100,9 @@ namespace EmailProcessing
                         }  catch (Exception deleteException)
                         {
                             // probably something using the file... abort
-                            log.WarnFormat("Could not move email package to output location, probably in use. Will retry later.\nSource: {0}\nLocation:{1}",packagePath, Path.Combine(outputLocation, key.ToString() + ".xml"));
+                            log.WarnFormat("Could not move email package to output location, probably in use. Will retry later.\nSource: {0}\nLocation:{1}\nMessage:{2}",
+                                packagePath,
+                                Path.Combine(outputLocation, key.ToString() + ".xml"), deleteException);
                             continue;
                         }
                     }
