@@ -27,14 +27,16 @@ namespace EmailProcessing
 
         public EmailFacade(string templateLocation, string pickupLocation, IEmailPackageRelayer packageRelayer)
         {
-            _templateLocation = templateLocation;
-            _pickupLocation = pickupLocation;
+            
+            _templateLocation = Util.DevirtualizePath(templateLocation);
+
+            _pickupLocation = Util.DevirtualizePath(pickupLocation);
             _packageRelayer = packageRelayer;
 
             EnsureFolderExists(_templateLocation);
             EnsureFolderExists(_pickupLocation);
 
-            templateManager = new EmailTemplateManager(templateLocation);
+            templateManager = new EmailTemplateManager(_templateLocation);
 
             templateProcessor = new TemplateProcessor();
 
