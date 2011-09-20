@@ -23,6 +23,11 @@ namespace EmailProcessing
         }
 
         public abstract void Relay(IEmailPackage package);
+
+        protected IEmailPackage RemoveDuplicateRecipients(IEmailPackage package)
+        {
+            return package; // todo: implement  
+        }
     }
 
     public interface IEmailPackageRelayer
@@ -47,6 +52,13 @@ namespace EmailProcessing
 
         public override void Relay(IEmailPackage package)
         {
+            if (string.IsNullOrEmpty(package.Identifier))
+            {
+                package.Identifier = string.Format("{0}-{1:yyyyMMddhhmmss}", package.Subject.Replace(' ', '-'), DateTime.Now);
+            }
+
+            package = base.RemoveDuplicateRecipients(package);
+
             var xml = PackageSerialiser.Serialise(package);
             string packagePath = Path.Combine(OutputLocation, package.Identifier + ".xml");
             File.WriteAllText(packagePath, xml);
