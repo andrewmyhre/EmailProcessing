@@ -1,14 +1,15 @@
 ﻿using System.Configuration;
+using log4net;
 
 namespace EmailProcessing.Configuration
 {
     public static class EmailProcessingConfigurationManager
     {
+        private static ILog Log = LogManager.GetLogger(typeof (EmailProcessingConfigurationManager));
         public static EmailProcessingConfigurationSection GetConfiguration()
         {
-            var configMap = new ExeConfigurationFileMap() { ExeConfigFilename = "EmailProcessing.config"};
-            var config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
-            return config.GetSection("emailProcessing") as EmailProcessingConfigurationSection;
+            Log.Debug("loading configuration");
+            return ConfigurationManager.GetSection("emailProcessing") as EmailProcessingConfigurationSection;
         }
     }
 }

@@ -35,21 +35,23 @@ namespace EmailRelay.App.Tests.Unit
             EmailPackageSerialiser serialiser = new EmailPackageSerialiser();
             EmailPackage package = Helpers.SamplePackage();
             string serialised = serialiser.Serialise(package);
-            string jgnamespace = "http://www.tanash.net/email/package";
+            string namespaceName = "http://www.tanash.net/email/package";
+
+            System.Diagnostics.Debug.WriteLine(serialised);
 
             XDocument doc = XDocument.Parse(serialised);
-            var serialisedPackage = doc.Element(XName.Get("emailPackage", jgnamespace));
-            Assert.That(serialisedPackage.Element(XName.Get("from", jgnamespace)).Value, Is.EqualTo(package.From));
-            Assert.That(serialisedPackage.Element(XName.Get("subject", jgnamespace)).Value, Is.EqualTo(package.Subject));
-            Assert.That(serialisedPackage.Element(XName.Get("html", jgnamespace)).Value, Is.EqualTo(package.Html));
-            Assert.That(serialisedPackage.Element(XName.Get("text", jgnamespace)).Value, Is.EqualTo(package.Text));
+            var serialisedPackage = doc.Element(XName.Get("emailPackage", namespaceName));
+            Assert.That(serialisedPackage.Element(XName.Get("from", namespaceName)).Value, Is.EqualTo(package.From));
+            Assert.That(serialisedPackage.Element(XName.Get("subject", namespaceName)).Value, Is.EqualTo(package.Subject));
+            Assert.That(serialisedPackage.Element(XName.Get("html", namespaceName)).Value, Is.EqualTo(package.Html));
+            Assert.That(serialisedPackage.Element(XName.Get("text", namespaceName)).Value, Is.EqualTo(package.Text));
             Assert.That(serialisedPackage
-                            .Element(XName.Get("recipients", jgnamespace))
-                            .Elements(XName.Get("address", jgnamespace)).ToList(), 
+                            .Element(XName.Get("recipients", namespaceName))
+                            .Elements(XName.Get("recipient", namespaceName)).ToList(), 
                             Has.Count.EqualTo(1));
             Assert.That(serialisedPackage
-                            .Element(XName.Get("attachments", jgnamespace))
-                            .Elements(XName.Get("attachment", jgnamespace)).ToList(),
+                            .Element(XName.Get("attachments", namespaceName))
+                            .Elements(XName.Get("attachment", namespaceName)).ToList(),
                             Has.Count.EqualTo(1));
         }
 

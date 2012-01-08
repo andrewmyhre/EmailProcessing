@@ -46,7 +46,7 @@ namespace EmailProcessing
                 _configuration.Amazon.Secret))
             {
                 Destination destination = new Destination();
-                destination.WithToAddresses(e.Message.To);
+                destination.WithToAddresses(e.Message.To.ToStringArray());
 
                 Content subject = new Content();
                 subject.WithCharset("UTF-8");

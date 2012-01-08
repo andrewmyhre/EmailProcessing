@@ -86,8 +86,8 @@ namespace EmailProcessing
                 // copy attachments to delivery folder
                 if (message.Attachments != null)
                 {
-                    foreach (string attachment in message.Attachments)
-                        File.Copy(attachment, Path.Combine(deliveryPath, Path.GetFileName(attachment)), true);
+                    foreach (var attachment in message.Attachments)
+                        File.Copy(attachment.Path, Path.Combine(deliveryPath, Path.GetFileName(attachment.Path)), true);
                 }
 
                 // copy the email package to delivery folder
@@ -147,26 +147,7 @@ namespace EmailProcessing
             if (!File.Exists(path)) return;
             var message = _packageSerialiser.Deserialize(File.ReadAllText(path));
             message.PackageLocation = path;
-            Guid id = Guid.Empty;
-            
-            if (!Guid.TryParse(Path.GetFileNameWithoutExtension(path), out id))
-            {
-                log.WarnFormat("{0} does not appear to be a valid email package", path);
-                if (File.Exists(Path.Combine(_failedLocation, Path.GetFileName(path))))
-                {
-                    try
-                    {
-                        File.Delete(Path.Combine(_failedLocation, Path.GetFileName(path)));
-                        File.Move(path, Path.Combine(_failedLocation, Path.GetFileName(path)));
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    
-                }
-                
-                return;
-            }
+            string id= Path.GetFileNameWithoutExtension(path);
             
             if (!EmailQueue.ContainsKey(id))
                 EmailQueue.Add(id, message);

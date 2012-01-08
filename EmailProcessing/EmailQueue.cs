@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EmailProcessing
 {
-    public class EmailQueue : Dictionary<Guid, IEmailPackage>
+    public class EmailQueue : Dictionary<string, IEmailPackage>
     {
     }
 }

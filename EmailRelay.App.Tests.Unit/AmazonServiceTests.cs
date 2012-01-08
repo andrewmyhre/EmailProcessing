@@ -77,7 +77,7 @@ namespace EmailRelay.App.Tests.Unit
             var client = Amazon.AWSClientFactory.CreateAmazonSimpleEmailServiceClient(_configuration.Amazon.Key, _configuration.Amazon.Secret);
 
             MailMessage m = new MailMessage();
-            var attachment = new Attachment("TextFile1.txt", "text/plain");
+            var attachment = new System.Net.Mail.Attachment("TextFile1.txt", "text/plain");
             attachment.TransferEncoding = TransferEncoding.QuotedPrintable;
             m.Attachments.Add(attachment);
             m.Body = "hello";
