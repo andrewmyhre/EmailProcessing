@@ -60,7 +60,7 @@ namespace EmailProcessing
             package = base.RemoveDuplicateRecipients(package);
 
             var xml = PackageSerialiser.Serialise(package);
-            string packagePath = Path.Combine(OutputLocation, package.Identifier + ".xml");
+            string packagePath = Path.Combine(OutputLocation.MapVirtual(), package.Identifier + ".xml");
             File.WriteAllText(packagePath, xml);
 
         }
