@@ -17,6 +17,7 @@ namespace EmailProcessing
         private ITemplateProcessor templateProcessor = null;
         private IEmailPackageSerialiser _packageSerialiser = null;
         private IEmailPackageRelayer _packageRelayer = null;
+        private readonly string _templateCulture = "pl"; // TODO: feed this from the event/recipient user account?
 
         public EmailFacade(EmailBuilderConfigurationSection configuration)
             : this(configuration.EmailSenderType.TemplateLocation, configuration.PickupLocation,
@@ -27,7 +28,6 @@ namespace EmailProcessing
 
         public EmailFacade(string templateLocation, string pickupLocation, IEmailPackageRelayer packageRelayer)
         {
-            
             _templateLocation = Util.DevirtualizePath(templateLocation);
 
             _pickupLocation = Util.DevirtualizePath(pickupLocation);
@@ -48,22 +48,22 @@ namespace EmailProcessing
             if (!Directory.Exists(templateLocation)) Directory.CreateDirectory(templateLocation);
         }
 
-        public void Send<T>(string to, string templateName, T model)
+        public void Send<T>(string to, string templateName, T model, string culture = "pl")
         {
             Send(new[] {to}, templateName, model);
         }
 
         public void Send<T>(string[] to, string templateName,
-            T model)
+            T model, string culture = "pl")
         {
             Send(to, templateName, model, null);
         }
 
         public void Send<T>(string[] to, string templateName,
             T model,
-            FileInfo[] fileAttachments)
+            FileInfo[] fileAttachments, string culture = "pl")
         {
-            var template = templateManager.Templates.Where(t => t.Name == templateName).FirstOrDefault();
+            var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template == null)
                 throw new ArgumentException("No such template " + templateName);
 
@@ -82,21 +82,21 @@ namespace EmailProcessing
           
         }
 
-        public void Send(string to, string templateName, Dictionary<string, string> tokenReplacements)
+        public void Send(string to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "pl")
         {
             Send(new string[] { to }, templateName, tokenReplacements, null);
         }
 
-        public void Send(string[] to, string templateName, Dictionary<string, string> tokenReplacements)
+        public void Send(string[] to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "pl")
         {
             Send(to, templateName, tokenReplacements, null);
         }
 
         public void Send(string[] to, string templateName,
             Dictionary<string,string> tokenReplacements,
-            FileInfo[] fileAttachments)
+            FileInfo[] fileAttachments, string culture = "pl")
         {
-            var template = templateManager.Templates.Where(t => t.Name == templateName).FirstOrDefault();
+            var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template ==null)
                 throw new ArgumentException("No such template " + templateName);
 

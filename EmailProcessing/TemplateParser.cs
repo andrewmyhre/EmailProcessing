@@ -22,6 +22,9 @@ namespace EmailProcessing
                                        : null,
                                        Html = xml.Element(XName.Get("html", ns)) != null
                                        ? xml.Element(XName.Get("html", ns)).Value
+                                       : null,
+                                       Culture = xml.Element(XName.Get("culture", ns)) != null
+                                       ? xml.Element(XName.Get("culture", ns)).Value
                                        : null
                                    };
                 return template;

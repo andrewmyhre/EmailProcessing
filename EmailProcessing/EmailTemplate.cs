@@ -20,6 +20,8 @@ namespace EmailProcessing
         public TokenList Tokens { get; set; }
         [DataMember(Name="templateName")]
         public string Name { get; set; }
+        [DataMember(Name = "culture")]
+        public string Culture { get; set; }
     }
 
     [CollectionDataContract(Name = "tokens", ItemName = "token", Namespace = "http://www.tanash.net/email/package")]

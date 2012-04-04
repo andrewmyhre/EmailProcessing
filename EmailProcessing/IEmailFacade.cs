@@ -5,21 +5,21 @@ namespace EmailProcessing
 {
     public interface IEmailFacade
     {
-        void Send<T>(string to, string templateName, T model);
+        void Send<T>(string to, string templateName, T model, string culture = "en");
 
         void Send<T>(string[] to, string templateName,
-                     T model);
+                     T model, string culture = "en");
 
         void Send<T>(string[] to, string templateName,
                      T model,
-                     FileInfo[] fileAttachments);
+                     FileInfo[] fileAttachments, string culture = "en");
 
-        void Send(string to, string templateName, Dictionary<string, string> tokenReplacements);
-        void Send(string[] to, string templateName, Dictionary<string, string> tokenReplacements);
+        void Send(string to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "en");
+        void Send(string[] to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "en");
 
         void Send(string[] to, string templateName,
                   Dictionary<string,string> tokenReplacements,
-                  FileInfo[] fileAttachments);
+                  FileInfo[] fileAttachments, string culture = "en");
 
         void LoadTemplates();
     }
