@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EmailProcessing.Configuration;
+using log4net;
 
 namespace EmailProcessing
 {
@@ -37,7 +38,7 @@ namespace EmailProcessing
 
     public class FileSystemEmailPackageRelayer : EmailPackageRelayer
     {
-
+        private ILog logger = LogManager.GetLogger(typeof (FileSystemEmailPackageRelayer));
         public FileSystemEmailPackageRelayer(EmailBuilderConfigurationSection configuration)
             : base(configuration)
         {
@@ -59,8 +60,10 @@ namespace EmailProcessing
 
             package = base.RemoveDuplicateRecipients(package);
 
+
             var xml = PackageSerialiser.Serialise(package);
             string packagePath = Path.Combine(OutputLocation.MapVirtual(), package.Identifier + ".xml");
+            logger.DebugFormat("relay email to {0}", packagePath);
             File.WriteAllText(packagePath, xml);
 
         }

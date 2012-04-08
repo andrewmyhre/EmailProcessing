@@ -6,11 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EmailProcessing.Configuration;
+using log4net;
 
 namespace EmailProcessing
 {
     public class EmailFacade : IEmailFacade
     {
+        private static ILog logger = LogManager.GetLogger(typeof (EmailFacade));
         private readonly string _templateLocation;
         private readonly string _pickupLocation;
         private IEmailTemplateManager templateManager = null;
@@ -56,6 +58,7 @@ namespace EmailProcessing
             T model,
             FileInfo[] fileAttachments, string culture = "pl")
         {
+            logger.DebugFormat("sending email {0}", templateName);
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template == null)
                 throw new ArgumentException("No such template " + templateName);
@@ -89,6 +92,7 @@ namespace EmailProcessing
             Dictionary<string,string> tokenReplacements,
             FileInfo[] fileAttachments, string culture = "pl")
         {
+            logger.DebugFormat("sending email {0}", templateName);
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template ==null)
                 throw new ArgumentException("No such template " + templateName);
