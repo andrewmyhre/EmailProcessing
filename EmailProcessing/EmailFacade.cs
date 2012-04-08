@@ -17,7 +17,6 @@ namespace EmailProcessing
         private ITemplateProcessor templateProcessor = null;
         private IEmailPackageSerialiser _packageSerialiser = null;
         private IEmailPackageRelayer _packageRelayer = null;
-        private readonly string _templateCulture = "pl"; // TODO: feed this from the event/recipient user account?
 
         public EmailFacade(EmailBuilderConfigurationSection configuration)
             : this(configuration.EmailSenderType.TemplateLocation, configuration.PickupLocation,
@@ -48,14 +47,14 @@ namespace EmailProcessing
             if (!Directory.Exists(templateLocation)) Directory.CreateDirectory(templateLocation);
         }
 
-        public void Send<T>(string to, string templateName, T model, string culture = "en")
+        public void Send<T>(string to, string templateName, T model, string culture = "pl")
         {
             Send(new[] {to}, templateName, model, null, culture);
         }
 
         public void Send<T>(string[] to, string templateName,
             T model,
-            FileInfo[] fileAttachments, string culture = "en")
+            FileInfo[] fileAttachments, string culture = "pl")
         {
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template == null)
@@ -76,7 +75,7 @@ namespace EmailProcessing
           
         }
 
-        public void Send(string to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "en")
+        public void Send(string to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "pl")
         {
             Send(new string[] { to }, templateName, tokenReplacements, null, culture);
         }
@@ -88,7 +87,7 @@ namespace EmailProcessing
 
         public void Send(string[] to, string templateName,
             Dictionary<string,string> tokenReplacements,
-            FileInfo[] fileAttachments, string culture = "en")
+            FileInfo[] fileAttachments, string culture = "pl")
         {
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template ==null)
