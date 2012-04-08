@@ -48,20 +48,14 @@ namespace EmailProcessing
             if (!Directory.Exists(templateLocation)) Directory.CreateDirectory(templateLocation);
         }
 
-        public void Send<T>(string to, string templateName, T model, string culture = "pl")
+        public void Send<T>(string to, string templateName, T model, string culture = "en")
         {
-            Send(new[] {to}, templateName, model);
-        }
-
-        public void Send<T>(string[] to, string templateName,
-            T model, string culture = "pl")
-        {
-            Send(to, templateName, model, null);
+            Send(new[] {to}, templateName, model, null, culture);
         }
 
         public void Send<T>(string[] to, string templateName,
             T model,
-            FileInfo[] fileAttachments, string culture = "pl")
+            FileInfo[] fileAttachments, string culture = "en")
         {
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template == null)
@@ -82,19 +76,19 @@ namespace EmailProcessing
           
         }
 
-        public void Send(string to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "pl")
+        public void Send(string to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "en")
         {
-            Send(new string[] { to }, templateName, tokenReplacements, null);
+            Send(new string[] { to }, templateName, tokenReplacements, null, culture);
         }
 
-        public void Send(string[] to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "pl")
+        public void Send(string[] to, string templateName, Dictionary<string, string> tokenReplacements, string culture = "en")
         {
-            Send(to, templateName, tokenReplacements, null);
+            Send(to, templateName, tokenReplacements, null, culture);
         }
 
         public void Send(string[] to, string templateName,
             Dictionary<string,string> tokenReplacements,
-            FileInfo[] fileAttachments, string culture = "pl")
+            FileInfo[] fileAttachments, string culture = "en")
         {
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template ==null)
