@@ -58,7 +58,7 @@ namespace EmailProcessing
             T model,
             FileInfo[] fileAttachments, string culture = "pl")
         {
-            logger.DebugFormat("sending email {0}", templateName);
+            logger.DebugFormat("sending email {0}.{1}", templateName, culture);
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template == null)
                 throw new ArgumentException("No such template " + templateName);
@@ -92,7 +92,7 @@ namespace EmailProcessing
             Dictionary<string,string> tokenReplacements,
             FileInfo[] fileAttachments, string culture = "pl")
         {
-            logger.DebugFormat("sending email {0}", templateName);
+            logger.DebugFormat("sending email {0}.{1}", templateName, culture); ;
             var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template ==null)
                 throw new ArgumentException("No such template " + templateName);
