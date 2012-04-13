@@ -2,7 +2,7 @@
 <emailPackage xmlns="http://www.tanash.net/email/package">
     <from>testfrom@server.com</from>
     <recipients>
-        <address>testrecipient@test.com</address>
+        <recipient>testrecipient@test.com</recipient>
     </recipients>
     <subject>test email subject: {subjectToken}</subject>
     <html>
