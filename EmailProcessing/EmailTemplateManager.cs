@@ -21,7 +21,7 @@ namespace EmailProcessing
 
         public EmailTemplateManager(string templateFolder)
         {
-            _templateFolder = templateFolder;
+            _templateFolder = Util.DevirtualizePath(templateFolder);
             _templateParser = new TemplateParser();
         }
 

@@ -63,7 +63,7 @@
     <Compile Include="Configuration\EmailBuilderConfigurationSection.cs" />
     <Compile Include="Configuration\EmailProcessingConfigurationManager.cs" />
     <Compile Include="Configuration\EmailProcessingConfigurationSection.cs" />
-    <Compile Include="Configuration\EmailSenderElement.cs" />
+    <Compile Include="Configuration\EmailSenderConfiguration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EmailFacade.cs" />
     <Compile Include="EmailPackage.cs" />

@@ -15,29 +15,21 @@ namespace EmailProcessing
         private static ILog logger = LogManager.GetLogger(typeof (EmailFacade));
         private readonly string _templateLocation;
         private readonly string _pickupLocation;
-        private IEmailTemplateManager templateManager = null;
+        private readonly IEmailTemplateManager _templateManager = null;
         private ITemplateProcessor templateProcessor = null;
         private IEmailPackageSerialiser _packageSerialiser = null;
         private IEmailPackageRelayer _packageRelayer = null;
 
-        public EmailFacade(EmailBuilderConfigurationSection configuration)
-            : this(configuration.EmailSenderType.TemplateLocation, configuration.PickupLocation,
-            Activator.CreateInstance(Type.GetType(configuration.EmailSenderType.Type), configuration) as IEmailPackageRelayer)
+        public EmailFacade(EmailBuilderConfigurationSection configuration, IEmailPackageRelayer packageRelayer, IEmailTemplateManager templateManager)
         {
-            
-        }
+            _templateLocation = Util.DevirtualizePath(configuration.TemplateLocation);
 
-        public EmailFacade(string templateLocation, string pickupLocation, IEmailPackageRelayer packageRelayer)
-        {
-            _templateLocation = Util.DevirtualizePath(templateLocation);
-
-            _pickupLocation = Util.DevirtualizePath(pickupLocation);
+            _pickupLocation = Util.DevirtualizePath(configuration.PickupLocation);
             _packageRelayer = packageRelayer;
+            _templateManager = templateManager;
 
             EnsureFolderExists(_templateLocation);
             EnsureFolderExists(_pickupLocation);
-
-            templateManager = new EmailTemplateManager(_templateLocation);
 
             templateProcessor = new TemplateProcessor();
 
@@ -58,8 +50,12 @@ namespace EmailProcessing
             T model,
             FileInfo[] fileAttachments, string culture = "pl")
         {
+            // culture may be in format en-GB
+            if (culture.Contains("-"))
+                culture = culture.Substring(0, culture.IndexOf("-"));
+
             logger.DebugFormat("sending email {0}.{1}", templateName, culture);
-            var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
+            var template = _templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template == null)
                 throw new ArgumentException("No such template " + templateName);
 
@@ -93,7 +89,7 @@ namespace EmailProcessing
             FileInfo[] fileAttachments, string culture = "pl")
         {
             logger.DebugFormat("sending email {0}.{1}", templateName, culture); ;
-            var template = templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
+            var template = _templateManager.Templates.Where(t => t.Name == templateName && t.Culture == culture).FirstOrDefault();
             if (template ==null)
                 throw new ArgumentException("No such template " + templateName);
 
@@ -121,7 +117,7 @@ namespace EmailProcessing
 
         public void LoadTemplates()
         {
-            templateManager.LoadTemplates();
+            _templateManager.LoadTemplates();
         }
     }
 }

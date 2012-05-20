@@ -7,15 +7,13 @@ namespace EmailProcessing
     {
         public static IEmailSender CreateSenderFromConfiguration(EmailProcessingConfigurationSection configuration)
         {
-            Type senderType = Type.GetType(configuration.EmailSenderType.Type);
-            IEmailSender sender = Activator.CreateInstance(senderType, configuration) as IEmailSender;
+            IEmailSender sender = Activator.CreateInstance(Type.GetType(configuration.EmailSenderType), configuration) as IEmailSender;
             return sender;
         }
 
         public static IEmailPackageRelayer CreateRelayerFromConfiguration(EmailBuilderConfigurationSection configuration)
         {
-            Type relayerType = Type.GetType(configuration.EmailSenderType.Type);
-            IEmailPackageRelayer relayer = Activator.CreateInstance(relayerType, configuration) as IEmailPackageRelayer;
+            IEmailPackageRelayer relayer = Activator.CreateInstance(Type.GetType(configuration.EmailSenderType), configuration) as IEmailPackageRelayer;
             return relayer;
         }
     }

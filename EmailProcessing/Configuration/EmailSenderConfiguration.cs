@@ -2,7 +2,7 @@
 
 namespace EmailProcessing.Configuration
 {
-    public class EmailSenderElement:  ConfigurationElement
+    public class EmailSenderConfiguration:  ConfigurationElement
     {
         [ConfigurationProperty("type", IsRequired = true)]
         public string Type { get { return (string)this["type"]; } set{this["type"]=value;} }

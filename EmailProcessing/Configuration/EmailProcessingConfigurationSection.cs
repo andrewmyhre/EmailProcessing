@@ -1,11 +1,12 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace EmailProcessing.Configuration
 {
     public class EmailProcessingConfigurationSection : ConfigurationSection
     {
-        [ConfigurationProperty("emailSender", IsRequired = true)]
-        public EmailSenderElement EmailSenderType { get { return (EmailSenderElement)this["emailSender"]; } set { this["emailSender"] = value; } }
+        [ConfigurationProperty("senderType", IsRequired = true)]
+        public string EmailSenderType { get { return (string)this["senderType"]; } }
         [ConfigurationProperty("pickupLocation", IsRequired = true)]
         public string PickupLocation { get { return (string)this["pickupLocation"]; } set { this["pickupLocation"] = value; } }
         [ConfigurationProperty("failedLocation", IsRequired = true)]

@@ -39,7 +39,8 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "EmailRelayService";
+            this.serviceInstaller1.DisplayName = "Email Relay Service";
+            this.serviceInstaller1.ServiceName = "Email Relay Service";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
